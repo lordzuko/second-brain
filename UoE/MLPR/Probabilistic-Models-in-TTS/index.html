@@ -1,0 +1,598 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=description content="In this note I am trying to understand what does Variational means in models like Variational Autoencoders , Variational Inference etc.
+This is an interesting setting and after going through everything which is discussed below, it doesn&rsquo;t sounds that complicated."><title>Brandon K Boswell</title><meta name=viewport content="width=device-width,initial-scale=1"><link rel="shortcut icon" type=image/png href=https://lordzuko.github.io//icon.png><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Sans+Pro:wght@400;600;700&family=Fira+Code:wght@400;700&family=Oswald:wght@700&display=block" rel=stylesheet><link href=https://lordzuko.github.io/styles.56d47f5cc6b40c4c97475ab7dab36b03.min.css rel=stylesheet><script src=https://lordzuko.github.io/js/popover.688c5dcb89a57776d7f1cbeaf6f7c44b.min.js></script>
+<script>const BASE_URL="https://lordzuko.github.io/",fetchData=Promise.all([fetch("https://lordzuko.github.io/indices/linkIndex.16fcf40f37c93b955bce577ac87ad193.min.json").then(e=>e.json()).then(e=>({index:e.index,links:e.links})),fetch("https://lordzuko.github.io/indices/contentIndex.22dfeb6e4b9a4d8d7fec5c46b13d453d.min.json").then(e=>e.json())]).then(([{index:e,links:t},n])=>({index:e,links:t,content:n})),draw=()=>{const e=document.getElementById("graph-container");if(!e)return requestAnimationFrame(draw);e.textContent="",drawGraph("https://lordzuko.github.io",[{"/moc":"#4388cc"}],1,!0,!1,!0)}</script><script>window.Million={navigate:e=>window.location.href=e,prefetch:()=>{}},draw()</script></head><script async src="https://www.googletagmanager.com/gtag/js?id=G-V9PR00CYK8"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-V9PR00CYK8",{anonymize_ip:!1})}</script><body><div id=search-container><div id=search-space><input autocomplete=off id=search-bar name=search type=text aria-label=Search placeholder="Search for something..."><div id=results-container></div></div></div><script src=https://cdn.jsdelivr.net/npm/flexsearch@0.7.21/dist/flexsearch.bundle.js integrity="sha256-i3A0NZGkhsKjVMzFxv3ksk0DZh3aXqu0l49Bbh0MdjE=" crossorigin=anonymous defer></script>
+<script defer src=https://lordzuko.github.io/js/search.1d58f2d3eaac68cc50beeb118d91edc9.min.js></script><div class=bodyContent><div class="singlePage logo-background"><header><a class=header_logo href=https://lordzuko.github.io/><img src=/header.svg alt="Himanshu Maurya"></a><div class=spacer></div><svg tabindex="0" id="search-icon" aria-labelledby="title desc" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title id="title">Search Icon</title><desc id="desc">Icon to open search</desc><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"/><circle cx="8" cy="8" r="7"/></g></svg></header><article><ul class=tags></ul><p>In this note I am trying to understand what does <code>Variational</code> means in models like <code>Variational Autoencoders</code> , <code>Variational Inference</code> etc.</p><p>This is an interesting setting and after going through everything which is discussed below, it doesn&rsquo;t sounds that complicated. Often the papers, makes things too convoluted, but there are only a few things to keep in mind. There are a few steps, which are taken to make the model probabilistic, which will be made clear as you go through the explanations one by one and do look at the code and things won&rsquo;t seem that scary anymore.</p><p>Also, I was curious about how probabilistic modeling works for Neural networks, they talked some of that in MLPR, but they made it sound all too complicated. However, looking at the code it doesn&rsquo;t seem that complicated. All we do is draw weights and biases in various layers in the neural networks from a gausssian or some other distribution. Now, instead of giving a point wise prediction, we get a number of predictions for every point, which can be used to know uncertainty in predictions. Generally, non-bayesian neural network gives the mean-prediction, but now we have a distribution over prediction, where the variance term tells about the certainty or confidence of prediction. Frameworks like !(Pyro)[https://num.pyro.ai/en/stable/getting_started.html] makes it easier to implement various probabilistic models, including Bayesian Neural Netwoks. We will see an example towards the end of the note.</p><p>Alright; start digging.</p><a href=#what-is-the-difference-between-autoencoder-and-variational-autoencoder><h3 id=what-is-the-difference-between-autoencoder-and-variational-autoencoder><span class=hanchor arialabel=Anchor># </span>what is the difference between autoencoder and variational autoencoder</h3></a><p>Autoencoders and Variational Autoencoders (VAEs) are both types of neural network architectures used for unsupervised learning tasks, such as <em><strong>dimensionality reduction, representation learning, and generative modeling</strong>.</em> While they share similarities in their structure, they have different goals and properties.</p><ol><li><p><strong>Structure:</strong></p><ul><li>Autoencoder: Consists of an encoder and a decoder. The encoder maps the input data to a lower-dimensional latent space, and the decoder reconstructs the input data from the latent representation. The goal is to <em>minimize the reconstruction error</em>.</li><li>Variational Autoencoder: Also consists of an encoder and a decoder but introduces a probabilistic layer in the latent space. <em>The encoder learns to map the input data to a probability distribution (usually Gaussian) in the latent space, and the decoder reconstructs the input data from samples drawn from that distribution.</em></li></ul></li><li><p><strong>Objective:</strong></p><ul><li>Autoencoder: Minimizes the reconstruction error, which measures the difference between the input data and the data reconstructed by the autoencoder. This objective encourages the autoencoder to <em>learn a compact representation of the data in the latent space</em>.</li><li>Variational Autoencoder: Maximizes the Evidence Lower Bound (ELBO), which is a lower bound on the log likelihood of the observed data. The ELBO consists of the reconstruction term (similar to the autoencoder objective) and the Kullback-Leibler (KL) divergence term, which regularizes the latent space by measuring the difference between the learned distribution and a prior distribution (usually a standard normal distribution).</li></ul></li><li><p><strong>Properties:</strong></p><ul><li>Autoencoder: Learns deterministic mappings between the input data and the latent space. The <em>latent space may not be well-structured, which can make it challenging to generate new data or interpolate between data points</em>.</li><li>Variational Autoencoder: Learns a probabilistic mapping between the input data and the latent space. <em>The VAE encourages a more structured latent space by regularizing it with the KL divergence term, making it better suited for generative tasks, such as sampling new data points or interpolating between existing data points</em>.</li></ul></li></ol><p>In summary, <em>autoencoders focus on learning a compact and deterministic representation</em> of the data, while <em>Variational Autoencoders learn a probabilistic and structured representation that is more suitable for generative tasks</em>.</p><a href=#explain-the-various-probabilistic-terminologies-used-in-vaes><h3 id=explain-the-various-probabilistic-terminologies-used-in-vaes><span class=hanchor arialabel=Anchor># </span>explain the various probabilistic terminologies used in VAEs</h3></a><p>In Variational Autoencoders (VAEs), several probabilistic terminologies are used to describe different aspects of the model and its training process. Here is an explanation of some key probabilistic terms:</p><ol><li><p><strong>Latent variable:</strong> A latent variable, often denoted as z, is an unobserved or hidden variable that we assume influences the observed data. In VAEs, the latent variable captures the underlying structure of the data in a lower-dimensional space.</p></li><li><p><strong>Prior distribution:</strong> The prior distribution, typically denoted as p(z), represents our initial belief about the latent variables before observing any data. In VAEs, we usually assume a standard normal distribution (mean 0 and standard deviation 1) as the prior, which helps in regularizing the latent space and making it more structured.</p></li><li><p><strong>Likelihood:</strong> The likelihood, denoted as p(x|z), describes the probability of observing the data x given the latent variable z. In VAEs, the likelihood is modeled by the decoder network, which generates the data from the latent space.</p></li><li><p><strong>Posterior distribution:</strong> The posterior distribution, denoted as p(z|x), represents the updated belief about the latent variables after observing the data x. <strong>It describes the probability distribution of the latent variables conditioned on the observed data.</strong> In VAEs, the true posterior is often intractable, so we approximate it using the variational distribution.</p></li><li><p><strong>Variational distribution:</strong> The variational distribution, denoted as q(z|x), is an approximation of the true posterior distribution. In VAEs, it is modeled by the encoder network, which maps the input data to the latent space. The variational distribution is usually chosen to be a Gaussian distribution with <strong>learnable mean</strong> (μ) and <strong>standard deviation</strong> (σ) parameters.</p><ol><li>This is often called <strong>guide function</strong> in framework like Pyro</li></ol></li><li><p><strong>Evidence Lower Bound (ELBO):</strong> The ELBO is an objective function used in VAEs to maximize a lower bound on the log likelihood of the observed data. It consists of two terms: <strong>the reconstruction term</strong>, which encourages the VAE to reconstruct the input data accurately, and <strong>the Kullback-Leibler (KL) divergence term</strong>, which measures the difference between the variational distribution q(z|x) and the prior distribution p(z). The ELBO is given by:</p><p>ELBO = E_q(z|x)[log p(x|z)] - KL(q(z|x) || p(z))</p></li></ol><p>Maximizing the ELBO is equivalent to minimizing the difference between the true posterior and the variational distribution, leading to a better approximation of the true posterior.</p><p>These probabilistic terminologies form the foundation of the VAE framework, helping to describe the relationships between the observed data, latent variables, and the model&rsquo;s learning objectives.</p><a href=#explain-variational-methods-in-tts-in-simple-terms><h4 id=explain-variational-methods-in-tts-in-simple-terms><span class=hanchor arialabel=Anchor># </span>explain variational methods in TTS in simple terms</h4></a><p>Variational methods in Text-to-Speech (TTS) refer to a group of techniques that help convert written text into spoken words. In simple terms, these methods help computers generate speech that sounds natural and realistic.</p><p>The process involves breaking down the task into smaller steps, and the variational methods help the computer learn how to handle each step. One crucial part of TTS is learning how to pronounce words correctly and varying the speech to make it sound more human-like.</p><p>Variational methods help by introducing a bit of randomness or flexibility in the way the computer generates speech. This is done by creating a set of possible ways to pronounce words and then selecting the most appropriate option based on the context.</p><p>These methods help improve the quality of the generated speech by making it sound more natural and less robotic. They are particularly useful for creating voice assistants, audiobooks, and other applications where it is essential to have high-quality, human-like speech.</p><p>Variational Autoencoders are a type of neural network used to learn the underlying structure of data. In TTS, they help to model the variability in speech, such as prosody, which includes rhythm, stress, and intonation patterns.</p><p>Mathematically, VAEs consist of two main components: an encoder and a decoder. The encoder takes the input data (e.g., phoneme sequences) and maps it to a lower-dimensional latent space, usually represented by a Gaussian distribution with a mean (μ) and a standard deviation (σ). The decoder then takes a sample from this distribution and generates an output (e.g., speech waveform).</p><p>The math comes in when we define the loss function, which measures how well the VAE is performing. The loss function consists of two parts:</p><ol><li><p>Reconstruction loss: This measures the difference between the original input data and the data reconstructed by the VAE. It encourages the model to generate speech that closely matches the original. Mathematically, it can be defined as the mean squared error (MSE) or the negative log-likelihood (NLL) between the input and output.</p></li><li><p>KL divergence: This measures the difference between the distribution of the latent space and a standard Gaussian distribution (with a mean of 0 and a standard deviation of 1). It encourages the model to keep the latent space structured and prevent overfitting. Mathematically, the KL divergence is calculated as:</p><p>KL(P||Q) = ∫ P(x) * log(P(x) / Q(x)) dx</p></li></ol><p>In the context of VAEs, P represents the encoder&rsquo;s output distribution (with mean μ and standard deviation σ), and Q is the standard Gaussian distribution. The KL divergence term in the loss function helps the latent space to have a more regular structure, which makes it easier to sample and generate new data.</p><p>To train the VAE, we minimize the combined loss (reconstruction loss + KL divergence) using optimization algorithms like stochastic gradient descent (SGD) or Adam. This process adjusts the weights of the neural network to better generate natural-sounding speech.</p><p>Sure! Here&rsquo;s a simplified example of how to implement a Variational Autoencoder (VAE) for TTS using Python and the deep learning library PyTorch. Remember that a real-world implementation would involve more complexity and training data.</p><p>First, let&rsquo;s import the necessary libraries:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span><span class=lnt>82
+</span><span class=lnt>83
+</span><span class=lnt>84
+</span><span class=lnt>85
+</span><span class=lnt>86
+</span><span class=lnt>87
+</span><span class=lnt>88
+</span><span class=lnt>89
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>import torch
+</span></span><span class=line><span class=cl>import torch.optim as optim
+</span></span><span class=line><span class=cl>from torch.utils.data import DataLoader, Dataset
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># Next, let&#39;s define the VAE architecture, including the encoder, decoder, and  the reparameterization trick:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>class VAE(nn.Module):
+</span></span><span class=line><span class=cl>    def __init__(self, input_dim, hidden_dim, latent_dim):
+</span></span><span class=line><span class=cl>        super(VAE, self).__init__()
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        # Encoder
+</span></span><span class=line><span class=cl>        self.encoder = nn.Sequential(
+</span></span><span class=line><span class=cl>            nn.Linear(input_dim, hidden_dim),
+</span></span><span class=line><span class=cl>            nn.ReLU(),
+</span></span><span class=line><span class=cl>            nn.Linear(hidden_dim, hidden_dim),
+</span></span><span class=line><span class=cl>            nn.ReLU(),
+</span></span><span class=line><span class=cl>        )
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>		# The mean and variance are both learnable parameters
+</span></span><span class=line><span class=cl>        self.mu = nn.Linear(hidden_dim, latent_dim)
+</span></span><span class=line><span class=cl>        self.log_var = nn.Linear(hidden_dim, latent_dim)
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        # Decoder
+</span></span><span class=line><span class=cl>        self.decoder = nn.Sequential(
+</span></span><span class=line><span class=cl>            nn.Linear(latent_dim, hidden_dim),
+</span></span><span class=line><span class=cl>            nn.ReLU(),
+</span></span><span class=line><span class=cl>            nn.Linear(hidden_dim, hidden_dim),
+</span></span><span class=line><span class=cl>            nn.ReLU(),
+</span></span><span class=line><span class=cl>            nn.Linear(hidden_dim, input_dim),
+</span></span><span class=line><span class=cl>        )
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    def reparameterize(self, mu, log_var):
+</span></span><span class=line><span class=cl>        std = torch.exp(0.5 * log_var)
+</span></span><span class=line><span class=cl>        eps = torch.randn_like(std)
+</span></span><span class=line><span class=cl>        return mu + eps * std
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    def forward(self, x):
+</span></span><span class=line><span class=cl>        # Encode
+</span></span><span class=line><span class=cl>        h = self.encoder(x)
+</span></span><span class=line><span class=cl>        mu, log_var = self.mu(h), self.log_var(h)
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        # Reparameterize
+</span></span><span class=line><span class=cl>        z = self.reparameterize(mu, log_var)
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        # Decode
+</span></span><span class=line><span class=cl>        x_recon = self.decoder(z)
+</span></span><span class=line><span class=cl>        return x_recon, mu, log_var
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># Now, let&#39;s create a dataset loader for our data. In a real-world TTS scenario, you would preprocess and load the input features (e.g., mel-spectrograms) and target features (e.g., speech waveforms). Here, we&#39;ll use random data for demonstration purposes:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>class DummyDataset(Dataset):
+</span></span><span class=line><span class=cl>    def __init__(self, size, input_dim):
+</span></span><span class=line><span class=cl>        self.data = torch.randn(size, input_dim)
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    def __len__(self):
+</span></span><span class=line><span class=cl>        return len(self.data)
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    def __getitem__(self, idx):
+</span></span><span class=line><span class=cl>        return self.data[idx]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>input_dim = 128
+</span></span><span class=line><span class=cl>data_size = 1000
+</span></span><span class=line><span class=cl>dataset = DummyDataset(data_size, input_dim)
+</span></span><span class=line><span class=cl>dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># We&#39;ll also need a function to calculate the VAE loss, which includes the reconstruction loss and the KL divergence:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>def vae_loss(x, x_recon, mu, log_var):
+</span></span><span class=line><span class=cl>    recon_loss = nn.MSELoss()(x_recon, x)
+</span></span><span class=line><span class=cl>    kl_div = -0.5 * torch.sum(1 + log_var - mu.pow(2) - log_var.exp())
+</span></span><span class=line><span class=cl>    return recon_loss + kl_div
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>vae = VAE(input_dim, hidden_dim=256, latent_dim=64) optimizer = optim.Adam(vae.parameters(), lr=0.001)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>epochs = 50
+</span></span><span class=line><span class=cl>for epoch in range(epochs):
+</span></span><span class=line><span class=cl>    for batch in dataloader:
+</span></span><span class=line><span class=cl>        x = batch
+</span></span><span class=line><span class=cl>        optimizer.zero_grad()
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        x_recon, mu, log_var = vae(x)
+</span></span><span class=line><span class=cl>        loss = vae_loss(x, x_recon, mu, log_var)
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        loss.backward()
+</span></span><span class=line><span class=cl>        optimizer.step()
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>    print(f&#34;Epoch {epoch + 1}/{epochs}, Loss: {loss.item()}&#34;)
+</span></span></code></pre></td></tr></table></div></div><p>This code defines a training loop that runs for 50 epochs. For each epoch, we process the batches of data, perform forward propagation through the VAE, and calculate the loss. We then perform backpropagation to update the model parameters using the optimizer.</p><p>After the model is trained, you can use the decoder to generate speech features (e.g., mel-spectrograms) from the latent space. In a real-world TTS system, you would then convert these features into a speech waveform using a vocoder.</p><p>Keep in mind that this example is greatly simplified and uses dummy data. A real-world TTS implementation would involve more complex architectures, preprocessing, and larger datasets to achieve high-quality speech synthesis.</p><a href=#what-is-the-reparameterization-trick-metioned-earlier><h3 id=what-is-the-reparameterization-trick-metioned-earlier><span class=hanchor arialabel=Anchor># </span>what is the reparameterization trick metioned earlier?</h3></a><p>The reparameterization trick is a technique used in Variational Autoencoders (VAEs) to enable backpropagation through the stochastic sampling process in the latent space. It allows the VAE to learn a more structured latent representation of the data while maintaining the ability to generate diverse outputs.</p><p>In VAEs, the encoder learns to represent the input data as a probability distribution in the latent space. During training, we sample a point from this distribution and use it as input for the decoder to generate the output. However, the sampling operation is non-differentiable, meaning that we cannot directly apply backpropagation through it.</p><p>The reparameterization trick addresses this issue by separating the random component from the sampling operation. Instead of directly sampling from the distribution with mean (μ) and standard deviation (σ), we sample from a standard normal distribution (with mean 0 and standard deviation 1) and scale the sampled value by σ and shift it by μ.</p><p>Mathematically, the reparameterization trick can be expressed as:</p><p>z = μ + ε * σ</p><p>where z is the sampled point in the latent space, μ and σ are the mean and standard deviation learned by the encoder, and ε is a random sample from the standard normal distribution.</p><p>By using this trick, we transform the non-differentiable sampling operation into a differentiable one. The randomness is now isolated in the ε term, while the rest of the equation is differentiable with respect to μ and σ. This allows us to apply backpropagation through the entire VAE architecture, making it possible to train the model using gradient-based optimization methods.</p><a href=#what-is-sampling-operation-non-differenitable><h3 id=what-is-sampling-operation-non-differenitable><span class=hanchor arialabel=Anchor># </span>what is sampling operation non-differenitable?</h3></a><p>In the context of Variational Autoencoders (VAEs) and other deep learning models that involve random sampling, the sampling operation is considered non-differentiable because it introduces a discrete or stochastic step in the computation, which breaks the chain of continuous and smooth operations required for gradient-based optimization methods like backpropagation.</p><p>To train deep learning models, we typically use gradient-based optimization algorithms that rely on computing gradients (partial derivatives) of the loss function with respect to the model&rsquo;s parameters. These gradients indicate how much each parameter should be adjusted to minimize the loss.</p><p>Differentiability is a crucial property required for calculating these gradients. A function is differentiable at a point if it has a derivative at that point, which means that it is smooth and has a well-defined tangent. Non-differentiable functions, on the other hand, have discontinuities, sharp turns, or points with undefined tangents, making it impossible to compute the gradients.</p><p>The sampling operation in VAEs is non-differentiable because it involves drawing random samples from a probability distribution. This random step introduces a discontinuity in the computation graph, and as a result, the gradients cannot be computed directly through the sampling operation.</p><p>The reparameterization trick, as explained earlier, helps overcome this issue by isolating the random component and making the rest of the computation differentiable. This allows us to apply gradient-based optimization methods, such as backpropagation, to train the VAE.</p><a href=#what-is-the-difference-between-variational-methods-and-diffusion-methods><h3 id=what-is-the-difference-between-variational-methods-and-diffusion-methods><span class=hanchor arialabel=Anchor># </span>what is the difference between variational methods and diffusion methods?</h3></a><p>Variational methods and diffusion methods are two different approaches used in machine learning for different purposes. Here is a brief comparison of the two:</p><p>Variational Methods:</p><ol><li><p>Purpose: Variational methods are primarily used for approximate inference in probabilistic models, such as Bayesian networks or graphical models. They can also be employed in unsupervised learning tasks, such as representation learning and generative modeling, as seen in Variational Autoencoders (VAEs).</p></li><li><p>Approach: Variational methods work by approximating an intractable probability distribution (e.g., the true posterior) with a simpler distribution that has tractable properties. They optimize the parameters of the simpler distribution to minimize the difference (usually measured by the Kullback-Leibler divergence) between the approximated and target distributions.</p></li><li><p>Applications: Variational methods are widely used in Bayesian inference, unsupervised learning, and generative modeling. Examples include Variational Autoencoders (VAEs), Variational Bayesian methods, and mean-field approximations.</p></li></ol><p>Diffusion Methods:</p><ol><li><p>Purpose: Diffusion methods are a class of stochastic processes that model the random movement of particles or information through a medium. In machine learning, diffusion methods can be employed for optimization, sampling, and data generation, as seen in the recently proposed diffusion probabilistic models.</p></li><li><p>Approach: Diffusion methods rely on stochastic processes, such as random walks, Brownian motion, or diffusion processes. In the context of machine learning, diffusion processes can be utilized to design algorithms that involve iterative noisy updates or transitions between different states. One such example is the denoising score matching framework, where a diffusion process is used to model the generation of data from a simple noise distribution.</p></li><li><p>Applications: Diffusion methods have applications in optimization, sampling, data generation, and deep learning. Examples include stochastic gradient descent (SGD) optimization, Markov Chain Monte Carlo (MCMC) sampling, and diffusion probabilistic models for data generation.</p></li></ol><p>In summary, variational methods are primarily concerned with approximate inference and learning in probabilistic models, while diffusion methods involve stochastic processes for optimization, sampling, and data generation tasks. Both approaches have unique strengths and applications in machine learning.</p><a href=#what-is-the-difference-in-the-variational-models-and-diffusion-based-models-in-tts><h3 id=what-is-the-difference-in-the-variational-models-and-diffusion-based-models-in-tts><span class=hanchor arialabel=Anchor># </span>what is the difference in the variational models and diffusion based models in TTS?</h3></a><p>Variational models and diffusion-based models are two different approaches used in the context of Text-to-Speech (TTS) systems. While both methods have been used to develop TTS systems, they have different principles and mechanisms.</p><p>Variational Models in TTS:</p><ol><li><p>Principle: Variational models in TTS often employ Variational Autoencoders (VAEs) as the core architecture. VAEs are generative models that learn a probabilistic mapping between input text and speech features (e.g., mel-spectrograms) by optimizing an objective that balances reconstruction accuracy and latent space regularization.</p></li><li><p>Mechanism: VAEs in TTS consist of an encoder that maps input text to a probability distribution in the latent space and a decoder that generates speech features from samples drawn from the latent distribution. The reparameterization trick enables backpropagation through the stochastic sampling process, allowing the VAE to learn a more structured latent representation of the data.</p></li><li><p>Applications: Variational models have been used in TTS systems to generate more diverse and expressive speech, control prosody, and enable better disentanglement of speaker identity and linguistic content. Examples include Tacotron-VAE and Global Style Tokens (GST).</p></li></ol><p>Diffusion-Based Models in TTS:</p><ol><li><p>Principle: Diffusion-based models in TTS utilize diffusion processes or stochastic transitions to model the generation of speech features from simpler distributions. These models often employ denoising score matching frameworks or diffusion probabilistic models to learn the generation process.</p></li><li><p>Mechanism: Diffusion-based TTS models consist of a series of noisy transitions that progressively transform a simple noise distribution into the target speech features. The model learns a score function that captures the local structure of the data distribution and guides the diffusion process. The generation process involves reversing the diffusion process, producing speech features from noise samples.</p></li><li><p>Applications: Diffusion-based models have been used in TTS systems to generate high-quality speech and model complex dependencies between text and speech features. Examples include WaveGrad and Text-to-Diffusion.</p></li></ol><p>In summary, variational models in TTS rely on Variational Autoencoders to learn a probabilistic mapping between input text and speech features, while diffusion-based models utilize diffusion processes or stochastic transitions to model the generation of speech features from simpler distributions. Both approaches have been successful in generating high-quality and expressive speech in TTS systems.</p><a href=#probabilistic-graphical-modeling-view-of-neural-networks><h2 id=probabilistic-graphical-modeling-view-of-neural-networks><span class=hanchor arialabel=Anchor># </span>Probabilistic graphical modeling view of neural networks?</h2></a><p>Probabilistic graphical models (PGMs) are a powerful framework for modeling complex systems by representing joint probability distributions over multiple random variables. They use graphs to describe the conditional dependencies between variables, allowing for efficient inference and learning. Neural networks, on the other hand, are a class of machine learning models that consist of interconnected nodes or neurons that transform input data into desired outputs.</p><p>Although neural networks are not inherently probabilistic models, they can be viewed from a probabilistic graphical modeling perspective. In this view, the neural network&rsquo;s nodes represent random variables, and the connections between nodes represent conditional dependencies between these variables. The weights and biases in the network can be seen as parameters governing these dependencies.</p><p>To build a probabilistic graphical model of a neural network, we can follow these steps:</p><ol><li><p>Define random variables: Each node in the neural network corresponds to a random variable. For example, in a feedforward neural network, each neuron in the input, hidden, and output layers can be considered a random variable.</p></li><li><p>Define conditional dependencies: The connections between nodes in the neural network represent the conditional dependencies between the corresponding random variables. For example, the output of a neuron depends on the weighted sum of its inputs, passed through an activation function.</p></li><li><p>Define probability distributions: Assign probability distributions to the random variables in the graphical model. In a Bayesian neural network, the weights and biases can be assigned prior distributions (e.g., Gaussian distributions), and the output random variables can be assigned likelihood distributions (e.g., Gaussian for regression or categorical for classification).</p></li><li><p>Perform inference and learning: Once the probabilistic graphical model is constructed, we can perform inference and learning tasks using PGM techniques, such as maximum likelihood estimation (MLE), maximum a posteriori (MAP) estimation, or variational inference.</p></li></ol><p>This probabilistic view of neural networks allows us to treat them as generative models, where the goal is to model the joint probability distribution of the input data and the outputs (or targets). It enables us to incorporate uncertainty into the model&rsquo;s predictions and learn more robust representations. Bayesian neural networks, for instance, use this perspective to model uncertainty in the weights and biases, leading to more robust and interpretable predictions.</p><p>In summary, although neural networks are not explicitly designed as probabilistic models, they can be viewed and analyzed from a probabilistic graphical modeling perspective, offering insights into their behavior and enabling the incorporation of uncertainty and robustness into their predictions.</p><a href=#is-probabilistic-graphical-models-a-pre-requisitite-to-learn-generative-models><h3 id=is-probabilistic-graphical-models-a-pre-requisitite-to-learn-generative-models><span class=hanchor arialabel=Anchor># </span>is probabilistic graphical models a pre-requisitite to learn generative models?</h3></a><p>Probabilistic graphical models (PGMs) are not a strict prerequisite for learning generative models, but having a good understanding of PGMs can be beneficial. Generative models aim to learn the underlying data distribution and can generate new samples that resemble the training data. While some generative models, such as Gaussian Mixture Models (GMMs) and Hidden Markov Models (HMMs), are based on PGMs, there are other popular generative models that do not explicitly rely on PGMs, such as Variational Autoencoders (VAEs) and Generative Adversarial Networks (GANs).</p><p>Understanding PGMs can provide you with a strong foundation in probability theory, Bayesian inference, and statistical modeling, which can be helpful when studying generative models. It will allow you to grasp the underlying principles and assumptions behind many generative models, as well as the inference and learning techniques used to train them.</p><p>However, it is possible to learn about generative models without a deep understanding of PGMs, especially if you focus on models like VAEs and GANs, which are primarily based on neural networks. In this case, having a good understanding of deep learning concepts, optimization techniques, and neural network architectures is more crucial.</p><p>In summary, while understanding PGMs is beneficial for learning generative models, it is not a strict prerequisite. You can still learn about generative models, especially those based on neural networks, by focusing on deep learning concepts and techniques. Nevertheless, having a strong foundation in probability theory and PGMs can enhance your understanding of generative models and help you develop a more comprehensive perspective on their principles and applications.</p><a href=#explain-bayesian-neural-network-using-simple-pytorch-code><h3 id=explain-bayesian-neural-network-using-simple-pytorch-code><span class=hanchor arialabel=Anchor># </span>explain bayesian neural network using simple pytorch code</h3></a><p>A Bayesian Neural Network (BNN) is a neural network that incorporates uncertainty by treating the weights and biases as random variables with prior distributions. In this example, we&rsquo;ll demonstrate how to create a simple BNN for regression using PyTorch. We&rsquo;ll use a toy dataset, the <code>sin(x)</code> function with added noise, for illustration.</p><p>First, let&rsquo;s import the necessary libraries and generate the toy dataset:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span><span class=lnt>82
+</span><span class=lnt>83
+</span><span class=lnt>84
+</span><span class=lnt>85
+</span><span class=lnt>86
+</span><span class=lnt>87
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-mysql data-lang=mysql><span class=line><span class=cl><span class=n>import</span><span class=w> </span><span class=n>torch</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>import</span><span class=w> </span><span class=n>torch</span><span class=p>.</span><span class=n>nn</span><span class=w> </span><span class=k>as</span><span class=w> </span><span class=n>nn</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>import</span><span class=w> </span><span class=n>torch</span><span class=p>.</span><span class=n>optim</span><span class=w> </span><span class=k>as</span><span class=w> </span><span class=n>optim</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>import</span><span class=w> </span><span class=n>numpy</span><span class=w> </span><span class=k>as</span><span class=w> </span><span class=n>np</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>import</span><span class=w> </span><span class=n>matplotlib</span><span class=p>.</span><span class=n>pyplot</span><span class=w> </span><span class=k>as</span><span class=w> </span><span class=n>plt</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1># Generate toy dataset
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>def</span><span class=w> </span><span class=nf>generate_toy_data</span><span class=p>(</span><span class=n>num_points</span><span class=o>=</span><span class=mi>100</span><span class=p>):</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>np</span><span class=p>.</span><span class=n>random</span><span class=p>.</span><span class=nf>seed</span><span class=p>(</span><span class=mi>0</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>x</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>np</span><span class=p>.</span><span class=n>random</span><span class=p>.</span><span class=nf>uniform</span><span class=p>(</span><span class=o>-</span><span class=mi>5</span><span class=p>,</span><span class=w> </span><span class=mi>5</span><span class=p>,</span><span class=w> </span><span class=n>size</span><span class=o>=</span><span class=p>(</span><span class=n>num_points</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>))</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>y</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>np</span><span class=p>.</span><span class=nf>sin</span><span class=p>(</span><span class=n>x</span><span class=p>)</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mi>0</span><span class=p>.</span><span class=mi>5</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>np</span><span class=p>.</span><span class=n>random</span><span class=p>.</span><span class=nf>normal</span><span class=p>(</span><span class=n>size</span><span class=o>=</span><span class=p>(</span><span class=n>num_points</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>))</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>x</span><span class=p>,</span><span class=w> </span><span class=n>y</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>x</span><span class=p>,</span><span class=w> </span><span class=n>y</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nf>generate_toy_data</span><span class=p>()</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>x_tensor</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>torch</span><span class=p>.</span><span class=nf>tensor</span><span class=p>(</span><span class=n>x</span><span class=p>,</span><span class=w> </span><span class=n>dtype</span><span class=o>=</span><span class=n>torch</span><span class=p>.</span><span class=n>float32</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>y_tensor</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>torch</span><span class=p>.</span><span class=nf>tensor</span><span class=p>(</span><span class=n>y</span><span class=p>,</span><span class=w> </span><span class=n>dtype</span><span class=o>=</span><span class=n>torch</span><span class=p>.</span><span class=n>float32</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1># Next, we define a simple neural network with one hidden layer and a `tanh` activation function:
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>class</span><span class=w> </span><span class=nf>SimpleBNN</span><span class=p>(</span><span class=n>nn</span><span class=p>.</span><span class=n>Module</span><span class=p>):</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>def</span><span class=w> </span><span class=nf>__init__</span><span class=p>(</span><span class=n>self</span><span class=p>,</span><span class=w> </span><span class=n>input_dim</span><span class=p>,</span><span class=w> </span><span class=n>hidden_dim</span><span class=p>,</span><span class=w> </span><span class=n>output_dim</span><span class=p>):</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nf>super</span><span class=p>(</span><span class=n>SimpleBNN</span><span class=p>,</span><span class=w> </span><span class=n>self</span><span class=p>).</span><span class=nf>__init__</span><span class=p>()</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>self</span><span class=p>.</span><span class=n>fc1</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>nn</span><span class=p>.</span><span class=nf>Linear</span><span class=p>(</span><span class=n>input_dim</span><span class=p>,</span><span class=w> </span><span class=n>hidden_dim</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>self</span><span class=p>.</span><span class=n>fc2</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>nn</span><span class=p>.</span><span class=nf>Linear</span><span class=p>(</span><span class=n>hidden_dim</span><span class=p>,</span><span class=w> </span><span class=n>output_dim</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>def</span><span class=w> </span><span class=nf>forward</span><span class=p>(</span><span class=n>self</span><span class=p>,</span><span class=w> </span><span class=n>x</span><span class=p>):</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>x</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>torch</span><span class=p>.</span><span class=nf>tanh</span><span class=p>(</span><span class=n>self</span><span class=p>.</span><span class=nf>fc1</span><span class=p>(</span><span class=n>x</span><span class=p>))</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>x</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>self</span><span class=p>.</span><span class=nf>fc2</span><span class=p>(</span><span class=n>x</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>x</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>input_dim</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mi>1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>hidden_dim</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mi>10</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>output_dim</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mi>1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>model</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nf>SimpleBNN</span><span class=p>(</span><span class=n>input_dim</span><span class=p>,</span><span class=w> </span><span class=n>hidden_dim</span><span class=p>,</span><span class=w> </span><span class=n>output_dim</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1># Now, we&#39;ll define the prior distribution for the weights and biases. In this example, we&#39;ll use Gaussian distributions with mean 0 and standard deviation 1:
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>def</span><span class=w> </span><span class=nf>gaussian_prior</span><span class=p>(</span><span class=n>w</span><span class=p>,</span><span class=w> </span><span class=n>mu</span><span class=o>=</span><span class=mi>0</span><span class=p>,</span><span class=w> </span><span class=n>sigma</span><span class=o>=</span><span class=mi>1</span><span class=p>):</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>log_prob</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=o>-</span><span class=mi>0</span><span class=p>.</span><span class=mi>5</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=p>(</span><span class=n>w</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>mu</span><span class=p>)</span><span class=o>**</span><span class=mi>2</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=n>sigma</span><span class=o>**</span><span class=mi>2</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mi>0</span><span class=p>.</span><span class=mi>5</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>np</span><span class=p>.</span><span class=nf>log</span><span class=p>(</span><span class=mi>2</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>np</span><span class=p>.</span><span class=n>pi</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>sigma</span><span class=o>**</span><span class=mi>2</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>log_prob</span><span class=p>.</span><span class=nf>sum</span><span class=p>()</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>def</span><span class=w> </span><span class=nf>compute_log_prior</span><span class=p>(</span><span class=n>model</span><span class=p>,</span><span class=w> </span><span class=n>mu</span><span class=o>=</span><span class=mi>0</span><span class=p>,</span><span class=w> </span><span class=n>sigma</span><span class=o>=</span><span class=mi>1</span><span class=p>):</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>log_prior</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mi>0</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>for</span><span class=w> </span><span class=n>param</span><span class=w> </span><span class=k>in</span><span class=w> </span><span class=n>model</span><span class=p>.</span><span class=nf>parameters</span><span class=p>():</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>log_prior</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=nf>gaussian_prior</span><span class=p>(</span><span class=n>param</span><span class=p>,</span><span class=w> </span><span class=n>mu</span><span class=p>,</span><span class=w> </span><span class=n>sigma</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>log_prior</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1># For the likelihood, we&#39;ll use a Gaussian distribution with the mean given by the model&#39;s output and a fixed standard deviation of 0.5:
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>def</span><span class=w> </span><span class=nf>compute_log_likelihood</span><span class=p>(</span><span class=n>model</span><span class=p>,</span><span class=w> </span><span class=n>x</span><span class=p>,</span><span class=w> </span><span class=n>y</span><span class=p>,</span><span class=w> </span><span class=n>sigma</span><span class=o>=</span><span class=mi>0</span><span class=p>.</span><span class=mi>5</span><span class=p>):</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>y_pred</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nf>model</span><span class=p>(</span><span class=n>x</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>log_likelihood</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=o>-</span><span class=mi>0</span><span class=p>.</span><span class=mi>5</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=p>(</span><span class=n>y_pred</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>y</span><span class=p>)</span><span class=o>**</span><span class=mi>2</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=n>sigma</span><span class=o>**</span><span class=mi>2</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mi>0</span><span class=p>.</span><span class=mi>5</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>np</span><span class=p>.</span><span class=nf>log</span><span class=p>(</span><span class=mi>2</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>np</span><span class=p>.</span><span class=n>pi</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>sigma</span><span class=o>**</span><span class=mi>2</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>log_likelihood</span><span class=p>.</span><span class=nf>sum</span><span class=p>()</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1># Now, we&#39;ll define the loss function as the negative log-posterior, which is the sum of the negative log-prior and the negative log-likelihood:
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>def</span><span class=w> </span><span class=nf>loss_function</span><span class=p>(</span><span class=n>model</span><span class=p>,</span><span class=w> </span><span class=n>x</span><span class=p>,</span><span class=w> </span><span class=n>y</span><span class=p>):</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>log_prior</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nf>compute_log_prior</span><span class=p>(</span><span class=n>model</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>log_likelihood</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nf>compute_log_likelihood</span><span class=p>(</span><span class=n>model</span><span class=p>,</span><span class=w> </span><span class=n>x</span><span class=p>,</span><span class=w> </span><span class=n>y</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>loss</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=o>-</span><span class=p>(</span><span class=n>log_prior</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>log_likelihood</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>loss</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1># Finally, we&#39;ll train the model using stochastic gradient descent:
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>optimizer</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>optim</span><span class=p>.</span><span class=nf>SGD</span><span class=p>(</span><span class=n>model</span><span class=p>.</span><span class=nf>parameters</span><span class=p>(),</span><span class=w> </span><span class=n>lr</span><span class=o>=</span><span class=mi>0</span><span class=p>.</span><span class=mi>01</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>num_epochs</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mi>1000</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>for</span><span class=w> </span><span class=n>epoch</span><span class=w> </span><span class=k>in</span><span class=w> </span><span class=nf>range</span><span class=p>(</span><span class=n>num_epochs</span><span class=p>):</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>optimizer</span><span class=p>.</span><span class=nf>zero_grad</span><span class=p>()</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>loss</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nf>loss_function</span><span class=p>(</span><span class=n>model</span><span class=p>,</span><span class=w> </span><span class=n>x_tensor</span><span class=p>,</span><span class=w> </span><span class=n>y_tensor</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>loss</span><span class=p>.</span><span class=nf>backward</span><span class=p>()</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>optimizer</span><span class=p>.</span><span class=nf>step</span><span class=p>()</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>epoch</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mi>1</span><span class=p>)</span><span class=w> </span><span class=o>%</span><span class=w> </span><span class=mi>100</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=mi>0</span><span class=p>:</span><span class=w>         
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=nf>print</span><span class=p>(</span><span class=n>f</span><span class=s2>&#34;Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item()}&#34;</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1># Now that the model is trained, let&#39;s use it for prediction and plot the results:
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1># Test data for prediction
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>x_test</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>torch</span><span class=p>.</span><span class=nf>tensor</span><span class=p>(</span><span class=n>np</span><span class=p>.</span><span class=nf>linspace</span><span class=p>(</span><span class=o>-</span><span class=mi>6</span><span class=p>,</span><span class=w> </span><span class=mi>6</span><span class=p>,</span><span class=w> </span><span class=n>num</span><span class=o>=</span><span class=mi>100</span><span class=p>).</span><span class=nf>reshape</span><span class=p>(</span><span class=o>-</span><span class=mi>1</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>),</span><span class=w> </span><span class=n>dtype</span><span class=o>=</span><span class=n>torch</span><span class=p>.</span><span class=n>float32</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>y_test</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nf>model</span><span class=p>(</span><span class=n>x_test</span><span class=p>).</span><span class=nf>detach</span><span class=p>().</span><span class=nf>numpy</span><span class=p>()</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>plt</span><span class=p>.</span><span class=nf>scatter</span><span class=p>(</span><span class=n>x</span><span class=p>,</span><span class=w> </span><span class=n>y</span><span class=p>,</span><span class=w> </span><span class=n>label</span><span class=o>=</span><span class=s2>&#34;Training Data&#34;</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>plt</span><span class=p>.</span><span class=nf>plot</span><span class=p>(</span><span class=n>x_test</span><span class=p>,</span><span class=w> </span><span class=n>y_test</span><span class=p>,</span><span class=w> </span><span class=n>color</span><span class=o>=</span><span class=s2>&#34;red&#34;</span><span class=p>,</span><span class=w> </span><span class=n>label</span><span class=o>=</span><span class=s2>&#34;Predictions&#34;</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>plt</span><span class=p>.</span><span class=nf>legend</span><span class=p>()</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>plt</span><span class=p>.</span><span class=k>show</span><span class=p>()</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>This code demonstrates a simple example of a Bayesian Neural Network using PyTorch. Note that this is not a fully Bayesian approach, as we are using point estimates of the weights and biases instead of sampling from their posterior distributions. To implement a more accurate Bayesian approach, you could use techniques such as Markov Chain Monte Carlo (MCMC) or Variational Inference.</p><p>Additionally, more sophisticated BNN libraries like Pyro (built on top of PyTorch) can be used to implement BNNs with more advanced features and better handling of the Bayesian aspect.</p><a href=#show-a-more-accurate-bayesian-approach-you-mentioned-above-for-the-same-example><h3 id=show-a-more-accurate-bayesian-approach-you-mentioned-above-for-the-same-example><span class=hanchor arialabel=Anchor># </span>show a more accurate bayesian approach you mentioned above for the same example</h3></a><p>In this example, we&rsquo;ll use the Pyro library, which is built on top of PyTorch, to implement a more accurate Bayesian approach for our toy dataset. We&rsquo;ll use the same dataset and neural network architecture as before.</p><p>First, let&rsquo;s import the necessary libraries and generate the toy dataset:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-v data-lang=v><span class=line><span class=cl><span class=kn>import</span> <span class=nv>torch</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nv>torch</span><span class=p>.</span><span class=nv>nn</span> <span class=k>as</span> <span class=nv>nn</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nv>numpy</span> <span class=k>as</span> <span class=nv>np</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nv>matplotlib</span><span class=p>.</span><span class=nv>pyplot</span> <span class=k>as</span> <span class=nv>plt</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nv>pyro</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nv>pyro</span><span class=p>.</span><span class=nv>distributions</span> <span class=k>as</span> <span class=nv>dist</span>
+</span></span><span class=line><span class=cl><span class=nv>from</span> <span class=nv>pyro</span><span class=p>.</span><span class=nv>infer</span> <span class=kn>import</span> <span class=nc>SVI</span><span class=p>,</span> <span class=nc>Trace_ELBO</span>
+</span></span><span class=line><span class=cl><span class=nv>from</span> <span class=nv>pyro</span><span class=p>.</span><span class=nv>optim</span> <span class=kn>import</span> <span class=nc>Adam</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>#</span> <span class=nc>Generate</span> <span class=nv>toy</span> <span class=nv>dataset</span>
+</span></span><span class=line><span class=cl><span class=nv>def</span> <span class=nf>generate_toy_data</span><span class=p>(</span><span class=nv>num_points</span><span class=o>=</span><span class=mi>100</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=nv>np</span><span class=p>.</span><span class=nv>random</span><span class=p>.</span><span class=nf>seed</span><span class=p>(</span><span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nv>x</span> <span class=o>=</span> <span class=nv>np</span><span class=p>.</span><span class=nv>random</span><span class=p>.</span><span class=nf>uniform</span><span class=p>(</span><span class=o>-</span><span class=mi>5</span><span class=p>,</span> <span class=mi>5</span><span class=p>,</span> <span class=nv>size</span><span class=o>=</span><span class=p>(</span><span class=nv>num_points</span><span class=p>,</span> <span class=mi>1</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=nv>y</span> <span class=o>=</span> <span class=nv>np</span><span class=p>.</span><span class=nf>sin</span><span class=p>(</span><span class=nv>x</span><span class=p>)</span> <span class=o>+</span> <span class=mf>0.5</span> <span class=o>*</span> <span class=nv>np</span><span class=p>.</span><span class=nv>random</span><span class=p>.</span><span class=nf>normal</span><span class=p>(</span><span class=nv>size</span><span class=o>=</span><span class=p>(</span><span class=nv>num_points</span><span class=p>,</span> <span class=mi>1</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nv>x</span><span class=p>,</span> <span class=nv>y</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>x</span><span class=p>,</span> <span class=nv>y</span> <span class=o>=</span> <span class=nf>generate_toy_data</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=nv>x_tensor</span> <span class=o>=</span> <span class=nv>torch</span><span class=p>.</span><span class=nf>tensor</span><span class=p>(</span><span class=nv>x</span><span class=p>,</span> <span class=nv>dtype</span><span class=o>=</span><span class=nv>torch</span><span class=p>.</span><span class=nv>float32</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nv>y_tensor</span> <span class=o>=</span> <span class=nv>torch</span><span class=p>.</span><span class=nf>tensor</span><span class=p>(</span><span class=nv>y</span><span class=p>,</span> <span class=nv>dtype</span><span class=o>=</span><span class=nv>torch</span><span class=p>.</span><span class=nv>float32</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>#</span> <span class=nc>Next</span><span class=p>,</span> <span class=nv>let</span><span class=s1>&#39;s define the same neural network architecture as before:
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>class SimpleBNN(nn.Module):
+</span></span></span><span class=line><span class=cl><span class=s1>    def __init__(self, input_dim, hidden_dim, output_dim):
+</span></span></span><span class=line><span class=cl><span class=s1>        super(SimpleBNN, self).__init__()
+</span></span></span><span class=line><span class=cl><span class=s1>        self.fc1 = nn.Linear(input_dim, hidden_dim)
+</span></span></span><span class=line><span class=cl><span class=s1>        self.fc2 = nn.Linear(hidden_dim, output_dim)
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>    def forward(self, x):
+</span></span></span><span class=line><span class=cl><span class=s1>        x = torch.tanh(self.fc1(x))
+</span></span></span><span class=line><span class=cl><span class=s1>        x = self.fc2(x)
+</span></span></span><span class=line><span class=cl><span class=s1>        return x
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1># Now we&#39;</span><span class=nv>ll</span> <span class=nv>define</span> <span class=nv>the</span> <span class=nv>model</span> <span class=nv>and</span> <span class=nv>guide</span> <span class=nv>functions</span> <span class=k>for</span> <span class=nc>Pyro</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>def</span> <span class=nf>model</span><span class=p>(</span><span class=nv>x</span><span class=p>,</span> <span class=nv>y</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=o>#</span> <span class=nc>Set</span> <span class=nv>prior</span> <span class=nv>distributions</span> <span class=k>for</span> <span class=nv>the</span> <span class=nv>weights</span> <span class=nv>and</span> <span class=nv>biases</span>
+</span></span><span class=line><span class=cl>    <span class=nv>fc1_weight_prior</span> <span class=o>=</span> <span class=nv>dist</span><span class=p>.</span><span class=nc>Normal</span><span class=p>(</span><span class=nv>torch</span><span class=p>.</span><span class=nf>zeros_like</span><span class=p>(</span><span class=nv>model</span><span class=p>.</span><span class=nv>fc1</span><span class=p>.</span><span class=nv>weight</span><span class=p>),</span> <span class=nv>torch</span><span class=p>.</span><span class=nf>ones_like</span><span class=p>(</span><span class=nv>model</span><span class=p>.</span><span class=nv>fc1</span><span class=p>.</span><span class=nv>weight</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=nv>fc1_bias_prior</span> <span class=o>=</span> <span class=nv>dist</span><span class=p>.</span><span class=nc>Normal</span><span class=p>(</span><span class=nv>torch</span><span class=p>.</span><span class=nf>zeros_like</span><span class=p>(</span><span class=nv>model</span><span class=p>.</span><span class=nv>fc1</span><span class=p>.</span><span class=nv>bias</span><span class=p>),</span> <span class=nv>torch</span><span class=p>.</span><span class=nf>ones_like</span><span class=p>(</span><span class=nv>model</span><span class=p>.</span><span class=nv>fc1</span><span class=p>.</span><span class=nv>bias</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=nv>fc2_weight_prior</span> <span class=o>=</span> <span class=nv>dist</span><span class=p>.</span><span class=nc>Normal</span><span class=p>(</span><span class=nv>torch</span><span class=p>.</span><span class=nf>zeros_like</span><span class=p>(</span><span class=nv>model</span><span class=p>.</span><span class=nv>fc2</span><span class=p>.</span><span class=nv>weight</span><span class=p>),</span> <span class=nv>torch</span><span class=p>.</span><span class=nf>ones_like</span><span class=p>(</span><span class=nv>model</span><span class=p>.</span><span class=nv>fc2</span><span class=p>.</span><span class=nv>weight</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=nv>fc2_bias_prior</span> <span class=o>=</span> <span class=nv>dist</span><span class=p>.</span><span class=nc>Normal</span><span class=p>(</span><span class=nv>torch</span><span class=p>.</span><span class=nf>zeros_like</span><span class=p>(</span><span class=nv>model</span><span class=p>.</span><span class=nv>fc2</span><span class=p>.</span><span class=nv>bias</span><span class=p>),</span> <span class=nv>torch</span><span class=p>.</span><span class=nf>ones_like</span><span class=p>(</span><span class=nv>model</span><span class=p>.</span><span class=nv>fc2</span><span class=p>.</span><span class=nv>bias</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nv>priors</span> <span class=o>=</span> <span class=p>{</span><span class=s1>&#39;fc1.weight&#39;</span><span class=p>:</span> <span class=nv>fc1_weight_prior</span><span class=p>,</span> <span class=s1>&#39;fc1.bias&#39;</span><span class=p>:</span> <span class=nv>fc1_bias_prior</span><span class=p>,</span> <span class=s1>&#39;fc2.weight&#39;</span><span class=p>:</span> <span class=nv>fc2_weight_prior</span><span class=p>,</span> <span class=s1>&#39;fc2.bias&#39;</span><span class=p>:</span> <span class=nv>fc2_bias_prior</span><span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=nv>lifted_module</span> <span class=o>=</span> <span class=nv>pyro</span><span class=p>.</span><span class=nf>random_module</span><span class=p>(</span><span class=s2>&#34;module&#34;</span><span class=p>,</span> <span class=nv>model</span><span class=p>,</span> <span class=nv>priors</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nv>lifted_model</span> <span class=o>=</span> <span class=nf>lifted_module</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nv>with</span> <span class=nv>pyro</span><span class=p>.</span><span class=nf>plate</span><span class=p>(</span><span class=s2>&#34;map&#34;</span><span class=p>,</span> <span class=nb>len</span><span class=p>(</span><span class=nv>x</span><span class=p>)):</span>
+</span></span><span class=line><span class=cl>        <span class=o>#</span> <span class=nc>Model</span><span class=s1>&#39;s output
+</span></span></span><span class=line><span class=cl><span class=s1>        prediction_mean = lifted_model(x).squeeze(-1)
+</span></span></span><span class=line><span class=cl><span class=s1>        # Likelihood
+</span></span></span><span class=line><span class=cl><span class=s1>        pyro.sample(&#34;obs&#34;, dist.Normal(prediction_mean, 0.5), obs=y)
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>def guide(x, y):
+</span></span></span><span class=line><span class=cl><span class=s1>    # Variational distributions for the weights and biases
+</span></span></span><span class=line><span class=cl><span class=s1>    fc1_weight_loc = torch.randn_like(model.fc1.weight)
+</span></span></span><span class=line><span class=cl><span class=s1>    fc1_weight_scale = torch.rand_like(model.fc1.weight)
+</span></span></span><span class=line><span class=cl><span class=s1>    fc1_bias_loc = torch.randn_like(model.fc1.bias)
+</span></span></span><span class=line><span class=cl><span class=s1>    fc1_bias_scale = torch.rand_like(model.fc1.bias)
+</span></span></span><span class=line><span class=cl><span class=s1>    
+</span></span></span><span class=line><span class=cl><span class=s1>    fc2_weight_loc = torch.randn_like(model.fc2.weight)
+</span></span></span><span class=line><span class=cl><span class=s1>    fc2_weight_scale = torch.rand_like(model.fc2.weight)
+</span></span></span><span class=line><span class=cl><span class=s1>    fc2_bias_loc = torch.randn_like(model.fc2.bias)
+</span></span></span><span class=line><span class=cl><span class=s1>    fc2_bias_scale = torch.rand_like(model.fc2.bias)
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>    fc1_weight_q = pyro.param(&#34;fc1_weight_q&#34;, fc1_weight_loc)
+</span></span></span><span class=line><span class=cl><span class=s1>    fc1_weight_scale_q = pyro.param(&#34;fc1_weight_scale_q&#34;, fc1_weight_scale, constraint=dist.constraints.positive)
+</span></span></span><span class=line><span class=cl><span class=s1>    fc1_bias_q = pyro.param(&#34;fc1_bias_q&#34;, fc1_bias_loc)
+</span></span></span><span class=line><span class=cl><span class=s1>    fc1_bias_scale_q = pyro.param(&#34;fc1_bias_scale_q&#34;, fc1_bias_scale, constraint=dist.constraints.positive)
+</span></span></span><span class=line><span class=cl><span class=s1>    
+</span></span></span><span class=line><span class=cl><span class=s1>    fc2_weight_q = pyro.param(&#34;fc2_weight_q&#34;, fc2_weight_loc)
+</span></span></span><span class=line><span class=cl><span class=s1>    fc2_weight_scale_q = pyro.param(&#34;fc2_weight_scale_q&#34;, fc2_weight_scale, constraint=dist.constraints.positive)
+</span></span></span><span class=line><span class=cl><span class=s1>    fc2_bias_q = pyro.param(&#34;fc2_bias_q&#34;, fc2_bias_loc)
+</span></span></span><span class=line><span class=cl><span class=s1>    fc2_bias_scale_q = pyro.param(&#34;fc2_bias_scale_q&#34;, fc2_bias_scale, constraint=dist.constraints.positive)
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>    fc1_weight = dist.Normal(fc1_weight_q, fc1_weight_scale_q)
+</span></span></span><span class=line><span class=cl><span class=s1>    fc1_bias = dist.Normal(fc1_bias_q, fc1_bias_scale_q)
+</span></span></span><span class=line><span class=cl><span class=s1>    fc2_weight = dist.Normal(fc2_weight_q, fc2_weight_scale_q)
+</span></span></span><span class=line><span class=cl><span class=s1>    fc2_bias = dist.Normal(fc2_bias_q, fc2_bias_scale_q)
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>    posterior = {&#39;</span><span class=nv>fc1</span><span class=p>.</span><span class=nv>weight</span><span class=s1>&#39;: fc1_weight, &#39;</span><span class=nv>fc1</span><span class=p>.</span><span class=nv>bias</span><span class=s1>&#39;: fc1_bias, &#39;</span><span class=nv>fc2</span><span class=p>.</span><span class=nv>weight</span><span class=s1>&#39;: fc2_weight, &#39;</span><span class=nv>fc2</span><span class=p>.</span><span class=nv>bias</span><span class=s1>&#39;: fc2_bias}
+</span></span></span><span class=line><span class=cl><span class=s1>    lifted_module = pyro.random_module(&#34;module&#34;, model, posterior)
+</span></span></span><span class=line><span class=cl><span class=s1>    return lifted_module()
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1># Instantiate the model
+</span></span></span><span class=line><span class=cl><span class=s1>input_dim = 1
+</span></span></span><span class=line><span class=cl><span class=s1>hidden_dim = 10
+</span></span></span><span class=line><span class=cl><span class=s1>output_dim = 1
+</span></span></span><span class=line><span class=cl><span class=s1>model = SimpleBNN(input_dim, hidden_dim, output_dim)
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1># Set up the optimizer and the inference algorithm (SVI)
+</span></span></span><span class=line><span class=cl><span class=s1>optimizer = Adam({&#34;lr&#34;: 0.01})
+</span></span></span><span class=line><span class=cl><span class=s1>svi = SVI(model, guide, optimizer, loss=Trace_ELBO())
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1># Training loop
+</span></span></span><span class=line><span class=cl><span class=s1>num_epochs = 1000
+</span></span></span><span class=line><span class=cl><span class=s1>for epoch in range(num_epochs):
+</span></span></span><span class=line><span class=cl><span class=s1>    loss = svi.step(x_tensor, y_tensor)
+</span></span></span><span class=line><span class=cl><span class=s1>    if (epoch + 1) % 100 == 0:
+</span></span></span><span class=line><span class=cl><span class=s1>        print(f&#34;Epoch [{epoch+1}/{num_epochs}], Loss: {loss/len(x_tensor)}&#34;)
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1># Finally, let&#39;</span><span class=nv>s</span> <span class=nv>use</span> <span class=nv>the</span> <span class=nv>trained</span> <span class=nv>model</span> <span class=k>for</span> <span class=nv>prediction</span> <span class=nv>and</span> <span class=nv>plot</span> <span class=nv>the</span> <span class=nl>results</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>def</span> <span class=nf>predict</span><span class=p>(</span><span class=nv>x</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=nv>sampled_models</span> <span class=o>=</span> <span class=p>[</span><span class=nf>guide</span><span class=p>(</span><span class=nc>None</span><span class=p>,</span> <span class=nc>None</span><span class=p>)</span> <span class=k>for</span> <span class=nv>_</span> <span class=k>in</span> <span class=nf>range</span><span class=p>(</span><span class=mi>100</span><span class=p>)]</span>
+</span></span><span class=line><span class=cl>    <span class=nv>y_preds</span> <span class=o>=</span> <span class=p>[</span><span class=nf>model</span><span class=p>(</span><span class=nv>x</span><span class=p>).</span><span class=nf>detach</span><span class=p>().</span><span class=nf>numpy</span><span class=p>()</span> <span class=k>for</span> <span class=nv>model</span> <span class=k>in</span> <span class=nv>sampled_models</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nv>np</span><span class=p>.</span><span class=nb>array</span><span class=p>(</span><span class=nv>y_preds</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>x_test</span> <span class=o>=</span> <span class=nv>torch</span><span class=p>.</span><span class=nf>tensor</span><span class=p>(</span><span class=nv>np</span><span class=p>.</span><span class=nf>linspace</span><span class=p>(</span><span class=o>-</span><span class=mi>6</span><span class=p>,</span> <span class=mi>6</span><span class=p>,</span> <span class=nv>num</span><span class=o>=</span><span class=mi>100</span><span class=p>).</span><span class=nf>reshape</span><span class=p>(</span><span class=o>-</span><span class=mi>1</span><span class=p>,</span> <span class=mi>1</span><span class=p>),</span> <span class=nv>dtype</span><span class=o>=</span><span class=nv>torch</span><span class=p>.</span><span class=nv>float32</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nv>y_test</span> <span class=o>=</span> <span class=nf>predict</span><span class=p>(</span><span class=nv>x_test</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nv>y_mean</span> <span class=o>=</span> <span class=nv>np</span><span class=p>.</span><span class=nf>mean</span><span class=p>(</span><span class=nv>y_test</span><span class=p>,</span> <span class=nv>axis</span><span class=o>=</span><span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nv>y_std</span> <span class=o>=</span> <span class=nv>np</span><span class=p>.</span><span class=nf>std</span><span class=p>(</span><span class=nv>y_test</span><span class=p>,</span> <span class=nv>axis</span><span class=o>=</span><span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>plt</span><span class=p>.</span><span class=nf>scatter</span><span class=p>(</span><span class=nv>x</span><span class=p>,</span> <span class=nv>y</span><span class=p>,</span> <span class=nv>label</span><span class=o>=</span><span class=s2>&#34;Training Data&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nv>plt</span><span class=p>.</span><span class=nf>plot</span><span class=p>(</span><span class=nv>x_test</span><span class=p>,</span> <span class=nv>y_mean</span><span class=p>,</span> <span class=nv>color</span><span class=o>=</span><span class=s2>&#34;red&#34;</span><span class=p>,</span> <span class=nv>label</span><span class=o>=</span><span class=s2>&#34;Predictions&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nv>plt</span><span class=p>.</span><span class=nf>fill_between</span><span class=p>(</span><span class=nv>x_test</span><span class=p>.</span><span class=nf>flatten</span><span class=p>(),</span> <span class=nv>y_mean</span><span class=p>.</span><span class=nf>flatten</span><span class=p>()</span><span class=o>-</span><span class=nv>y_std</span><span class=p>,</span> <span class=nv>y_mean</span><span class=p>.</span><span class=nf>flatten</span><span class=p>()</span><span class=o>+</span><span class=nv>y_std</span><span class=p>,</span> <span class=nv>alpha</span><span class=o>=</span><span class=mf>0.2</span><span class=p>,</span> <span class=nv>color</span><span class=o>=</span><span class=s2>&#34;red&#34;</span><span class=p>,</span> <span class=nv>label</span><span class=o>=</span><span class=s2>&#34;Uncertainty&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nv>plt</span><span class=p>.</span><span class=nf>legend</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=nv>plt</span><span class=p>.</span><span class=nf>show</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><p>In this example, we&rsquo;ve used Pyro to implement a more accurate Bayesian approach to our neural network. We&rsquo;ve defined the model and guide functions, and used Stochastic Variational Inference (SVI) for training. The predictions now include uncertainty, as we sample multiple models from the variational posterior and average their predictions.</p><ul><li><a target=“_blank” href=https://medium.com/paper-club/understanding-pyros-model-and-guide-a-love-story-7f3aa0603886 rel=noopener>https://medium.com/paper-club/understanding-pyros-model-and-guide-a-love-story-7f3aa0603886</a></li><li>Bayesian Neural Network:
+<a target=“_blank” href=https://num.pyro.ai/en/stable/examples/bnn.html rel=noopener>https://num.pyro.ai/en/stable/examples/bnn.html</a></li></ul></article></div><div class=page-end><div class=backlinks-container><h3>Backlinks</h3><ul class=backlinks><li>No backlinks found</li></ul></div><div><script src=https://cdn.jsdelivr.net/npm/d3@6.7.0/dist/d3.min.js integrity="sha256-+7jaYCp29O1JusNWHaYtgUn6EhuP0VaFuswhNV06MyI=" crossorigin=anonymous></script><h3>Interactive Graph</h3><div id=graph-container></div><style>:root{--g-node:var(--secondary);--g-node-active:var(--primary);--g-node-inactive:var(--visited);--g-link:var(--outlinegray);--g-link-active:#5a7282}</style><script src=https://lordzuko.github.io/js/graph.5388a070919094961d3e5151252e9065.js></script></div></div><div class=footer><div class=outreach><h3>Have a question?</h3><p>Reach out via <strong><a href=mailto:brandonkboswell@gmail.com target=_blank>Email</a></strong> or <strong><a href=https://twitter.com/brandonkboswell target=_blank>Twitter</a></strong>.</p><p>If you liked the post, <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flordzuko.github.io%2fUoE%2fMLPR%2fProbabilistic-Models-in-TTS%2f&text=&via=brandonkboswell" target=_blank>click here to share it with your friends on Twitter</a>.<br>I ♥️ hearing when the post was helpful. It makes me smile 😄.</p></div><div id=contact_buttons><footer><p>Made with ♥ in Richmond, VA<br>© 2023 Himanshu Maurya</p><ul><li><a href=https://twitter.com/lordzuko2 target=_blank>Twitter</a></li><li><a href=https://www.youtube.com/@HimanshuMauryalordzuko target=_blank>YouTube</a></li><li><a href=https://github.com/lordzuko target=_blank>Github</a></li></ul></footer></div></div></div></body></html>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Himanshu Maurya</title><link>https://lordzuko.github.io/thesis/</link><description>Recent content from Himanshu Maurya's Digital Garden</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://lordzuko.github.io/thesis/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://lordzuko.github.io/Thesis/Abstract/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/Thesis/Abstract/</guid><description>Topic: Aligning latent space of speaking style with human perception using a re-embedding strategy [sigurgeirsson:speaking-style]
+To generate appropriate speech in context, we must not only consider what is said but also how it is said.</description><content:encoded><![CDATA[<p><strong>Topic:</strong> <strong>
+
+<a target=“_blank” href="https://www.wiki.ed.ac.uk/pages/viewpage.action?spaceKey=CSTR&amp;title=SLP&#43;project&#43;list&#43;2022-23" rel="noopener">Aligning latent space of speaking style with human perception using a re-embedding strategy [sigurgeirsson:speaking-style]</a></strong></p>
+<p>To generate appropriate speech in context, we must not only consider what is said but also how it is said. Prosody is used to influence a particular meaning, to indicate attitude and emotion, and more. Modelling prosody in Text-To-Speech (TTS) is a highly complex task, as prosody manifests itself in multiple hierarchies in speech, from phone-level acoustic features to suprasegmental effects spanning multiple sentences. As perception of certain prosodic features is highly subjective and prosodically labelled speech corpora are scarce, researchers have looked to unsupervised methods of modelling prosody in TTS.</p>
+<p>Many propose to jointly train a reference encoder to model a latent representation of prosody or speaking style [e.g., 1, 2, 3]. The reference encoder is conditioned on the target speech during training and learns to model features that are perceptually important for the acoustic model in reconstructing the target speech [1, 2]. Many recent unsupervised style-modelling methods have focused on disentangling non-prosodic features from the latent prosodic representations [e.g., 3, 4, 8], but there is little known about how well this latent space aligns with human perception of style. Understanding this space could help solve the issue of feature-entanglement without any modifications to the model.</p>
+<p>Here, we propose to manipulate the latent prosody space using light-supervision from human annotators. Such strategies have already been proposed for speaker-modelling [5, 6] and speaker-adaptation [9] but not for speaking-style modelling. To achieve this we suggest to re-embed synthesised utterances that human annotators have tuned acoustically to match a target speaking style. After re-embedding the annotated utterances we aim to tune a fixed bank of style tokens [2]. This could not only further understanding the latent prosody space but also align it with human perception improving the quality of style generation.</p>
+<p>[1] 
+
+<a target=“_blank” href="http://proceedings.mlr.press/v80/skerry-ryan18a.html" rel="noopener">Towards end-to-end prosody transfer for expressive speech synthesis with tacotron</a></p>
+<p>[2] 
+
+<a target=“_blank” href="http://proceedings.mlr.press/v80/wang18h.html?ref=https://githubhelp.com" rel="noopener">Style tokens: Unsupervised style modeling, control and transfer in end-to-end speech synthesis</a></p>
+<p>[3] 
+
+<a target=“_blank” href="https://arxiv.org/abs/2108.02271" rel="noopener">Daft-exprt: Robust prosody transfer across speakers for expressive speech synthesis</a></p>
+<p>[4] 
+
+<a target=“_blank” href="https://arxiv.org/abs/2004.14617" rel="noopener">Copycat: Many-to-many fine-grained prosody transfer for neural text-to-speech</a></p>
+<p>[5] 
+
+<a target=“_blank” href="https://ieeexplore.ieee.org/iel7/6570655/9289074/09354556.pdf" rel="noopener">Perceptual-similarity-aware deep speaker representation learning for multi-speaker generative modeling</a></p>
+<p>[6] 
+
+<a target=“_blank” href="https://arxiv.org/pdf/1907.08294" rel="noopener">DNN-based Speaker Embedding Using Subjective Inter-speaker Similarity for Multi-speaker Modeling in Speech Synthesis</a></p>
+<p>[7] 
+
+<a target=“_blank” href="https://proceedings.neurips.cc/paper/2019/hash/f63f65b503e22cb970527f23c9ad7db1-Abstract.html" rel="noopener">Fastspeech: Fast, robust and controllable text to speech</a></p>
+<p>[8] 
+
+<a target=“_blank” href="https://arxiv.org/abs/1906.03402" rel="noopener">Effective use of variational embedding capacity in expressive end-to-end speech synthesis</a></p>
+<p>[9] 
+
+<a target=“_blank” href="https://arxiv.org/abs/2206.10256" rel="noopener">Human-in-the-loop Speaker Adaptation for DNN-based Multi-speaker TTS</a></p>
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/Thesis/Background/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/Thesis/Background/</guid><description>Architectures Tacotron Tacotron2 FastPitch FastSpeech2 Prosody Prosody Control: Ctrl+P [8] Effective use of variational embedding capacity in expressive end-to-end speech synthesis Style Tokens Globle Style Tokens: Works on Speaking Style What is speaking style?</description><content:encoded><![CDATA[<h2 id="architectures">Architectures</h2>
+<ul>
+<li>Tacotron</li>
+<li>Tacotron2</li>
+<li>FastPitch</li>
+<li>FastSpeech2</li>
+</ul>
+<h2 id="prosody">Prosody</h2>
+<ul>
+<li>Prosody Control: Ctrl+P</li>
+<li>[8] 
+
+<a target=“_blank” href="https://arxiv.org/abs/1906.03402" rel="noopener">Effective use of variational embedding capacity in expressive end-to-end speech synthesis</a></li>
+</ul>
+<h2 id="style-tokens">Style Tokens</h2>
+<ul>
+<li>Globle Style Tokens:
+<ul>
+<li>Works on</li>
+</ul>
+</li>
+</ul>
+<h2 id="speaking-style">Speaking Style</h2>
+<p>What is speaking style? How is this different from Prosody? What is done for Speaking Style so far? What doesn&rsquo;t seem to fit the equation? (Challenges) What we think is a good/expected outcome? (expectation) What can be done to reach there?</p>
+<p>We are modeling speaking style to improve perception of a limited set of speaking styles</p>
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/Thesis/Dataset/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/Thesis/Dataset/</guid><description>Well maintained lihttps://github.com/coqui-ai/open-speech-corpora
+Potential Source https://speechresearch.github.io/prompttts/#dataset
+5 different style factors (gender, pitch, speaking speed, volume, and emotion) from a commercial TTS API The emotion factor has 5 categories Thee gender factor has 2 categories rest of style factors including pitch, speaking speed, and volume, we extract the value of style factors from speech with signal processing tools divided into 3 categories (high/normal/low) we ask experts to write style prompts for each category further augment the style prompts, we utilize SimBERT to generate more style prompts with similar semantics.</description><content:encoded><![CDATA[<p>Well maintained lihttps://github.com/coqui-ai/open-speech-corpora</p>
+<p>Potential Source
+
+
+<a target=“_blank” href="https://speechresearch.github.io/prompttts/#dataset" rel="noopener">https://speechresearch.github.io/prompttts/#dataset</a></p>
+<ul>
+<li>5 different style factors (gender, pitch, speaking speed, volume, and emotion) from a commercial TTS 
+
+<a target=“_blank” href="https://azure.microsoft.com/en-us/services/cognitive-services/text-to-speech/#overview" rel="noopener">API</a></li>
+<li>The emotion factor has 5 categories</li>
+<li>Thee gender factor has 2 categories</li>
+<li>rest of style factors including <strong>pitch</strong>, <strong>speaking</strong> <strong>speed</strong>, and <strong>volume</strong>, we extract the value of style factors from speech with signal processing tools
+<ul>
+<li>divided into 3 categories (high/normal/low)</li>
+</ul>
+</li>
+<li>we ask experts to write style prompts for each category
+<ul>
+<li>further augment the style prompts, we utilize SimBERT to generate more style prompts with similar semantics.</li>
+</ul>
+</li>
+</ul>
+<p>Our definition of Speaking Style
+<strong>speaking style as any perceptually distinct manner of speaking that is context-appropriate.</strong></p>
+<p>narration (book reading), novel/anime characters, neutral discourse, news reader, customer-service style, poetry style</p>
+<p><strong>News Reading</strong></p>
+<ol>
+<li>The &ldquo;<strong>1996 English Broadcast News Speech (HUB4)</strong>&rdquo; dataset contains a total of 104 hours of broadcasts from ABC, CNN, and CSPAN television networks and NPR and PRI radio networks with corresponding transcripts. The dataset is divided into a training set, development data, and evaluation data. Transcripts have been made of all recordings in this publication, manually time aligned to the phrasal level, annotated to identify boundaries between news stories, speaker turn boundaries, and gender information about the speakers​
+
+<a target=“_blank” href="https://catalog.ldc.upenn.edu/LDC97S44" rel="noopener">1</a></li>
+<li>The &ldquo;<strong>TDT4 Multilingual Broadcast News Speech Corpus</strong>&rdquo; was developed by the Linguistic Data Consortium (LDC) with support from the DARPA TIDES Program. This release contains the complete set of American English, Modern Standard Arabic, and Mandarin Chinese broadcast news audio used in the 2002 and 2003 Topic Detection and Tracking (TDT) technology evaluations, totaling approximately 607 hours. The TDT4 corpus contains news data collected daily from 20 news sources in three languages (American English, Mandarin Chinese, and Modern Standard Arabic), over a period of four months (October 2000 through January 2001)​
+
+<a target=“_blank” href="https://catalog.ldc.upenn.edu/LDC2005S11" rel="noopener">2</a>​.​</li>
+</ol>
+<ul>
+<li>
+<p><strong>BBC Programs</strong> (Not News)
+<strong>Lip Reading Sentences 2 (LRS2)</strong>: This is a dataset for lip reading sentences. It&rsquo;s one of the largest publicly available datasets for lip reading sentences in-the-wild. The database consists mainly of news and talk shows from BBC programs. Each sentence is up to 100 characters in length. It contains thousands of speakers without speaker labels and large variation in head pose. The pre-training set contains 96,318 utterances, the training set contains 45,839 utterances, the validation set contains 1,082 utterances, and the test set contains 1,242 utterances​
+
+<a target=“_blank” href="https://paperswithcode.com/datasets?task=speech-recognition" rel="noopener">1</a>​.</p>
+<ul>
+<li>
+
+<a target=“_blank” href="https://www.robots.ox.ac.uk/~vgg/data/lip_reading/" rel="noopener">https://www.robots.ox.ac.uk/~vgg/data/lip_reading/</a></li>
+</ul>
+</li>
+<li>
+<p>Blizzard challenge:</p>
+<ul>
+<li>The books are read by  the 2013 Blizzard Challenge speaker, Catherine Byers, in an<br>
+animated and emotive storytelling style. Some books contain  very expressive character voices with high dynamic range, which are challenging to model</li>
+<li>
+
+<a target=“_blank” href="https://arxiv.org/pdf/1808.01410.pdf" rel="noopener">https://arxiv.org/pdf/1808.01410.pdf</a> - PREDICTING EXPRESSIVE SPEAKING STYLE FROM TEXT IN END-TO-END SPEECH SYNTHESIS</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>
+<p><strong>LibriSpeech</strong>: This is a standard large-scale dataset for evaluating ASR (Automatic Speech Recognition) systems. It consists of approximately 1,000 hours of narrated audiobooks collected from the LibriVox project. The speaking style is described as &ldquo;narrated&quot;​
+
+<a target=“_blank” href="https://huggingface.co/blog/audio-datasets" rel="noopener">1</a>​.</p>
+</li>
+<li>
+<p><strong>Common Voice</strong>: This is a crowd-sourced open-licensed speech dataset where speakers record text from Wikipedia in various languages. The speaking style is &ldquo;narrated&rdquo; and the dataset contains significant variation in both audio quality and speakers. The English subset of version 11.0 contains approximately 2,300 hours of validated data​
+
+<a target=“_blank” href="https://huggingface.co/blog/audio-datasets" rel="noopener">1</a>​.</p>
+</li>
+<li>
+<p><strong>VoxPopuli</strong>: This is a large-scale multilingual speech corpus consisting of data sourced from 2009-2020 European Parliament event recordings. The speaking style is described as &ldquo;oratory, political speech&rdquo; and the dataset largely consists of non-native speakers. The English subset contains approximately 550 hours of labeled speech​
+
+<a target=“_blank” href="https://huggingface.co/blog/audio-datasets" rel="noopener">1</a>​.</p>
+</li>
+<li>
+<p><strong>TED-LIUM</strong>: This dataset is based on English-language TED Talk conference videos. The speaking style is &ldquo;oratory educational talks&rdquo; covering a range of different cultural, political, and academic topics. The Release 3 (latest) edition of the dataset contains approximately 450 hours of training data​
+
+<a target=“_blank” href="https://huggingface.co/blog/audio-datasets" rel="noopener">1</a>​.</p>
+</li>
+<li>
+<p><strong>GigaSpeech</strong>: This is a multi-domain English speech recognition corpus curated from audiobooks, podcasts, and YouTube. It covers both &ldquo;narrated and spontaneous speech&rdquo; over a variety of topics. The dataset contains training splits varying from 10 hours - 10,000 hours​
+
+<a target=“_blank” href="https://huggingface.co/blog/audio-datasets" rel="noopener">1</a>​.</p>
+</li>
+<li>
+<p><strong>SPGISpeech</strong>: This is an English speech recognition corpus composed of company earnings calls that have been manually transcribed. The speaking style is described as &ldquo;oratory and spontaneous speech&rdquo; and it contains training splits ranging from 200 hours - 5,000 hours​
+
+<a target=“_blank” href="https://huggingface.co/blog/audio-datasets" rel="noopener">1</a>​.</p>
+</li>
+<li>
+<p><strong>Earnings-22</strong>: This is a 119-hour corpus of English-language earnings calls collected from global companies. The dataset does not explicitly mention the speaking style, but it is described as covering a range of real-world financial topics​
+
+<a target=“_blank” href="https://huggingface.co/blog/audio-datasets" rel="noopener">1</a>​.</p>
+</li>
+</ol>
+]]></content:encoded></item></channel></rss>

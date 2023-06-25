@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Himanshu Maurya</title><link>https://lordzuko.github.io/mathematics-for-ml/</link><description>Recent content from Himanshu Maurya's Digital Garden</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://lordzuko.github.io/mathematics-for-ml/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://lordzuko.github.io/Mathematics-for-ML/Maths-for-ML/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/Mathematics-for-ML/Maths-for-ML/</guid><description>Mathematics for Machine Learning — Ulrike von Luxburg, 2020/21 https://www.youtube.com/playlist?list=PL05umP7R6ij1a6KdEy8PVE9zoCv6SlHRS
+http://www.tml.cs.uni-tuebingen.de/teaching/2020_maths_for_ml/index.php
+Statistics Foundation for Machine Learning - https://www.youtube.com/playlist?list=PLuqhl4iqeAZZMwUUdc-3pCy8LtFTGrQZL
+Written Notes: Look in written notes directory
+Linear Algebra Vector Spaces Basis and Dimension Direct Sum Linear Maps, Kernel, Range Matrices Invertible maps and matrices Transpose Change of basis Rank of a matrix Quotient Space; Equivalence Relation Determinant Eigenvalues Characteristic Polynomial Trace of a matrix Diagonalization; triangular matrices Metrics spaces Normed Spaces; p-norms Norms on $R^d$ are equivalent Convex set induces a norm Spaces of continuous and differentiable functions Lp-spaces of integrable functions Scalar product Orthogonal vectors and basis Orthogonal matrices Symmetric Matrices Spectral theorem for symmetric matrices Positive definite matrices Variational characterization of eigenvalues Singular value decomposition Rank-k-approximation, matrix norms Pseudo-inverse of a matrix Continuous linear functionals and operator norm Dual space, Riesz representative theorem Probability Definition of a probability measure Different types of measures: discrete, with density; Radon-Nikodym Different types of measures: singular measures, Lebesgue decomposition Cumulative Distribution Function (CDF) Random Variables (RVs) Conditional Probabilities Bayes Theorem Independence Expectation (discrete case) Variance, covariance, correlation (discrete case) Expectation and covariance (general case) Markov and Chebyshev inequality Example distributions: binomial, poisson, multivariate normal Convergence of random variables Borel-Cantelli Law of large numbers, Central limit theorem Concentration inequalities Glivenko-Cantelli theorem Product space and joint distribution Marginal distribution Conditional distribution Conditional Expectation Calculus Sequences and convergence Continuity Sequences of functions; pointwise and uniform convergence Differentiation on R Riemann integram on R Fundamental theorem of calculus on R Power Series Taylor Series Sigma-Algebra Measure Lebesgue measure on $R^n$ Differentiation on $R^n$: total derivative Differentiation on $R^n$: Higher order derivatives Minima, maxima, saddlepoints Matrix calculus Statistics Estimation, bias, variance Confidence sets Maximum likelihood estimator Sufficiency, identifiability Hypothesis testing, level and power of a test Likelihood-ration tests and Neyman-Pearson lemma p-values Multiple testing Non-parametric tests (rank and permutation tests, Kolmogorov-Smirnov) The bootstrap Bayesian statistics Others High-dimensional spaces What is a convex optimisation problem?</description><content:encoded><![CDATA[<p>Mathematics for Machine Learning — Ulrike von Luxburg, 2020/21
+
+
+<a target=“_blank” href="https://www.youtube.com/playlist?list=PL05umP7R6ij1a6KdEy8PVE9zoCv6SlHRS" rel="noopener">https://www.youtube.com/playlist?list=PL05umP7R6ij1a6KdEy8PVE9zoCv6SlHRS</a></p>
+<p>
+
+<a target=“_blank” href="http://www.tml.cs.uni-tuebingen.de/teaching/2020_maths_for_ml/index.php" rel="noopener">http://www.tml.cs.uni-tuebingen.de/teaching/2020_maths_for_ml/index.php</a></p>
+<p>Statistics Foundation for Machine Learning - 
+
+<a target=“_blank” href="https://www.youtube.com/playlist?list=PLuqhl4iqeAZZMwUUdc-3pCy8LtFTGrQZL" rel="noopener">https://www.youtube.com/playlist?list=PLuqhl4iqeAZZMwUUdc-3pCy8LtFTGrQZL</a></p>
+<p>Written Notes: Look in <code>written notes</code> directory</p>
+<h1 id="linear-algebra">Linear Algebra</h1>
+<ul>
+<li><input disabled="" type="checkbox"> Vector Spaces</li>
+<li><input disabled="" type="checkbox"> Basis and Dimension</li>
+<li><input disabled="" type="checkbox"> Direct Sum</li>
+<li><input disabled="" type="checkbox"> Linear Maps, Kernel, Range</li>
+<li><input disabled="" type="checkbox"> Matrices</li>
+<li><input disabled="" type="checkbox"> Invertible maps and matrices</li>
+<li><input disabled="" type="checkbox"> Transpose</li>
+<li><input disabled="" type="checkbox"> Change of basis</li>
+<li><input disabled="" type="checkbox"> Rank of a matrix</li>
+<li><input disabled="" type="checkbox"> Quotient Space; Equivalence Relation</li>
+<li><input disabled="" type="checkbox"> Determinant</li>
+<li><input disabled="" type="checkbox"> Eigenvalues</li>
+<li><input disabled="" type="checkbox"> Characteristic Polynomial</li>
+<li><input disabled="" type="checkbox"> Trace of a matrix</li>
+<li><input disabled="" type="checkbox"> Diagonalization; triangular matrices</li>
+<li><input disabled="" type="checkbox"> Metrics spaces</li>
+<li><input disabled="" type="checkbox"> Normed Spaces; p-norms</li>
+<li><input disabled="" type="checkbox"> Norms on $R^d$ are equivalent</li>
+<li><input disabled="" type="checkbox"> Convex set induces a norm</li>
+<li><input disabled="" type="checkbox"> Spaces of continuous and differentiable functions</li>
+<li><input disabled="" type="checkbox"> Lp-spaces of integrable functions</li>
+<li><input disabled="" type="checkbox"> Scalar product</li>
+<li><input disabled="" type="checkbox"> Orthogonal vectors and basis</li>
+<li><input disabled="" type="checkbox"> Orthogonal matrices</li>
+<li><input disabled="" type="checkbox"> Symmetric Matrices</li>
+<li><input disabled="" type="checkbox"> Spectral theorem for symmetric matrices</li>
+<li><input disabled="" type="checkbox"> Positive definite matrices</li>
+<li><input disabled="" type="checkbox"> Variational characterization of eigenvalues</li>
+<li><input disabled="" type="checkbox"> Singular value decomposition</li>
+<li><input disabled="" type="checkbox"> Rank-k-approximation, matrix norms</li>
+<li><input disabled="" type="checkbox"> Pseudo-inverse of a matrix</li>
+<li><input disabled="" type="checkbox"> Continuous linear functionals and operator norm</li>
+<li><input disabled="" type="checkbox"> Dual space, Riesz representative theorem</li>
+</ul>
+<h1 id="probability">Probability</h1>
+<ul>
+<li><input disabled="" type="checkbox"> Definition of a probability measure</li>
+<li><input disabled="" type="checkbox"> Different types of measures: discrete, with density; Radon-Nikodym</li>
+<li><input disabled="" type="checkbox"> Different types of measures: singular measures, Lebesgue decomposition</li>
+<li><input disabled="" type="checkbox"> Cumulative Distribution Function (CDF)</li>
+<li><input disabled="" type="checkbox"> Random Variables (RVs)</li>
+<li><input disabled="" type="checkbox"> Conditional Probabilities</li>
+<li><input disabled="" type="checkbox"> Bayes Theorem</li>
+<li><input disabled="" type="checkbox"> Independence</li>
+<li><input disabled="" type="checkbox"> Expectation (discrete case)</li>
+<li><input disabled="" type="checkbox"> Variance, covariance, correlation (discrete case)</li>
+<li><input disabled="" type="checkbox"> Expectation and covariance (general case)</li>
+<li><input disabled="" type="checkbox"> Markov and Chebyshev inequality</li>
+<li><input disabled="" type="checkbox"> Example distributions: binomial, poisson, multivariate normal</li>
+<li><input disabled="" type="checkbox"> Convergence of random variables</li>
+<li><input disabled="" type="checkbox"> Borel-Cantelli</li>
+<li><input disabled="" type="checkbox"> Law of large numbers, Central limit theorem</li>
+<li><input disabled="" type="checkbox"> Concentration inequalities
+<ul>
+<li><input disabled="" type="checkbox"> Glivenko-Cantelli theorem</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> Product space and joint distribution</li>
+<li><input disabled="" type="checkbox"> Marginal distribution</li>
+<li><input disabled="" type="checkbox"> Conditional distribution</li>
+<li><input disabled="" type="checkbox"> Conditional Expectation</li>
+</ul>
+<h1 id="calculus">Calculus</h1>
+<ul>
+<li><input disabled="" type="checkbox"> Sequences and convergence</li>
+<li><input disabled="" type="checkbox"> Continuity</li>
+<li><input disabled="" type="checkbox"> Sequences of functions; pointwise and uniform convergence</li>
+<li><input disabled="" type="checkbox"> Differentiation on R</li>
+<li><input disabled="" type="checkbox"> Riemann integram on R</li>
+<li><input disabled="" type="checkbox"> Fundamental theorem of calculus on R</li>
+<li><input disabled="" type="checkbox"> Power Series</li>
+<li><input disabled="" type="checkbox"> Taylor Series</li>
+<li><input disabled="" type="checkbox"> Sigma-Algebra</li>
+<li><input disabled="" type="checkbox"> Measure</li>
+<li><input disabled="" type="checkbox"> Lebesgue measure on $R^n$</li>
+<li><input disabled="" type="checkbox"> Differentiation on $R^n$: total derivative</li>
+<li><input disabled="" type="checkbox"> Differentiation on $R^n$: Higher order derivatives</li>
+<li><input disabled="" type="checkbox"> Minima, maxima, saddlepoints</li>
+<li><input disabled="" type="checkbox"> Matrix calculus</li>
+<li><input disabled="" type="checkbox"> </li>
+</ul>
+<h1 id="statistics">Statistics</h1>
+<ul>
+<li><input disabled="" type="checkbox"> Estimation, bias, variance</li>
+<li><input disabled="" type="checkbox"> Confidence sets</li>
+<li><input disabled="" type="checkbox"> Maximum likelihood estimator</li>
+<li><input disabled="" type="checkbox"> Sufficiency, identifiability</li>
+<li><input disabled="" type="checkbox"> Hypothesis testing, level and power of a test</li>
+<li><input disabled="" type="checkbox"> Likelihood-ration tests and Neyman-Pearson lemma</li>
+<li><input disabled="" type="checkbox"> p-values</li>
+<li><input disabled="" type="checkbox"> Multiple testing</li>
+<li><input disabled="" type="checkbox"> Non-parametric tests (rank and permutation tests, Kolmogorov-Smirnov)</li>
+<li><input disabled="" type="checkbox"> The bootstrap</li>
+<li><input disabled="" type="checkbox"> Bayesian statistics</li>
+</ul>
+<h1 id="others">Others</h1>
+<ul>
+<li><input disabled="" type="checkbox"> High-dimensional spaces</li>
+<li><input disabled="" type="checkbox"> What is a convex optimisation problem?</li>
+<li><input disabled="" type="checkbox"> Convex optimisation, Lagrangian, dual problem</li>
+</ul>
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/Mathematics-for-ML/Numerics-of-Machine-Learning-2023/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/Mathematics-for-ML/Numerics-of-Machine-Learning-2023/</guid><description>This class discusses both practical and theoretically interesting aspects of the algorithms that drive machine learning. It endorses the view of Probabilistic Numerics, the idea that computation itself is an inference process, to describe the numerical algorithms inside the learning machine, as learning machines.</description><content:encoded><![CDATA[<p>This class discusses both practical and theoretically interesting aspects of the algorithms that drive machine learning. It endorses the view of Probabilistic Numerics, the idea that computation itself is an inference process, to describe the numerical algorithms <em>inside</em> the learning machine, <em>as</em> learning machines.</p>
+<ul>
+<li>
+<p>Slides: 
+
+<a target=“_blank” href="https://github.com/philipphennig/NumericsOfML/" rel="noopener">https://github.com/philipphennig/NumericsOfML/</a></p>
+</li>
+<li>
+<p>Lectures: 
+
+<a target=“_blank” href="https://www.youtube.com/playlist?list=PL05umP7R6ij2lwDdj7IkuHoP9vHlEcH0s" rel="noopener">https://www.youtube.com/playlist?list=PL05umP7R6ij2lwDdj7IkuHoP9vHlEcH0s</a></p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 1: Introduction</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 2: Numerical Linear Algebra</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 3: Scaling Gaussian Processes</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 4: Computational-Aware Gaussian Processes</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 5: State-space Models</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 6: Solving Ordinary Differential Equations (ODE)</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 7: Probabilistic Numerical ODE Solvers</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 8: Partial Differential Equations</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 9: Monte Carlo</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 10: Bayesian Quadrature</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 11: Optimization for Deep Learning</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 12: Second-Order Optimization for Deep Learning</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 13: Uncertainty in Deep Learning</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 14: Conclusion</p>
+</li>
+</ul>
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/Mathematics-for-ML/Probabilistic-Machine-Learning/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/Mathematics-for-ML/Probabilistic-Machine-Learning/</guid><description>Philipp Hennig, 2023
+https://www.youtube.com/playlist?list=PL05umP7R6ij2YE8rRJSb-olDNbntAQ_Bx
+CSC412 Winter 2020: Probabilsitic Machine Learning : https://probmlcourse.github.io/csc412/
+Lecture 1 - Introduction
+Lecture 2 - Reasoning under uncertainty
+Lecture 3 - Continuous Variables
+Lecture 4 - Exponential Families</description><content:encoded><![CDATA[<ul>
+<li>
+<p>Philipp Hennig, 2023</p>
+</li>
+<li>
+<p>
+
+<a target=“_blank” href="https://www.youtube.com/playlist?list=PL05umP7R6ij2YE8rRJSb-olDNbntAQ_Bx" rel="noopener">https://www.youtube.com/playlist?list=PL05umP7R6ij2YE8rRJSb-olDNbntAQ_Bx</a></p>
+</li>
+<li>
+<p>CSC412 Winter 2020: Probabilsitic Machine Learning : 
+
+<a target=“_blank” href="https://probmlcourse.github.io/csc412/" rel="noopener">https://probmlcourse.github.io/csc412/</a></p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 1 - Introduction</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 2 - Reasoning under uncertainty</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 3 - Continuous Variables</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 4 - Exponential Families</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 5 - Exponential Families II</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 6 - Gaussian Probability Distributions</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 7 - Parametric Regression</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 8 - Gaussian Processes</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 9 - Understanding Gaussian Processes</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> Lecture 10 - GP Regression: An extensive example</p>
+</li>
+</ul>
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/Mathematics-for-ML/Quick-ML-for-DL/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/Mathematics-for-ML/Quick-ML-for-DL/</guid><description> https://www.youtube.com/playlist?list=PL05umP7R6ij0bo4UtMdzEJ6TiLOqj4ZCm
+MaDL Introduction Sets, Scalars, Vectors, Matrices and Tensors Adding and Multiplying Matrices and Vectors Identity and Inverse Matrices Linear Dependence and Span Vector and Matrix Norms Special Matrices and Vectors Eigenvalue and Singular Value Decomposition The trace operator and determinant Differential Calculus Vector Calculus Random Variables and Probability Distributions Common Probability Distributions Bayesian Decision Theory Expectation, Variance and Covariance Information and Entropy Kullback-Leibler Divergence The Argmin and Argmax Operators</description><content:encoded><![CDATA[<p>
+
+<a target=“_blank” href="https://www.youtube.com/playlist?list=PL05umP7R6ij0bo4UtMdzEJ6TiLOqj4ZCm" rel="noopener">https://www.youtube.com/playlist?list=PL05umP7R6ij0bo4UtMdzEJ6TiLOqj4ZCm</a></p>
+<ul>
+<li><input disabled="" type="checkbox"> MaDL Introduction</li>
+<li><input disabled="" type="checkbox"> Sets, Scalars, Vectors, Matrices and Tensors</li>
+<li><input disabled="" type="checkbox"> Adding and Multiplying Matrices and Vectors</li>
+<li><input disabled="" type="checkbox"> Identity and Inverse Matrices</li>
+<li><input disabled="" type="checkbox"> Linear Dependence and Span</li>
+<li><input disabled="" type="checkbox"> Vector and Matrix Norms</li>
+<li><input disabled="" type="checkbox"> Special Matrices and Vectors</li>
+<li><input disabled="" type="checkbox"> Eigenvalue and Singular Value Decomposition</li>
+<li><input disabled="" type="checkbox"> The trace operator and determinant</li>
+<li><input disabled="" type="checkbox"> Differential Calculus</li>
+<li><input disabled="" type="checkbox"> Vector Calculus</li>
+<li><input disabled="" type="checkbox"> Random Variables and Probability Distributions</li>
+<li><input disabled="" type="checkbox"> Common Probability Distributions</li>
+<li><input disabled="" type="checkbox"> Bayesian Decision Theory</li>
+<li><input disabled="" type="checkbox"> Expectation, Variance and Covariance</li>
+<li><input disabled="" type="checkbox"> Information and Entropy</li>
+<li><input disabled="" type="checkbox"> Kullback-Leibler Divergence</li>
+<li><input disabled="" type="checkbox"> The Argmin and Argmax Operators</li>
+</ul>
+]]></content:encoded></item></channel></rss>
