@@ -1,4 +1,130 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Himanshu Maurya</title><link>https://lordzuko.github.io/uoe/</link><description>Recent content from Himanshu Maurya's Digital Garden</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://lordzuko.github.io/uoe/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://lordzuko.github.io/UoE/CSAI/Summary/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/CSAI/Summary/</guid><description/><content:encoded></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/MLPR/Probabilistic-Models-in-TTS/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/MLPR/Probabilistic-Models-in-TTS/</guid><description>In this note I am trying to understand what does Variational means in models like Variational Autoencoders , Variational Inference etc.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Himanshu Maurya</title><link>https://lordzuko.github.io/uoe/</link><description>Recent content from Himanshu Maurya's Digital Garden</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 01 May 2023 12:00:00 +0000</lastBuildDate><atom:link href="https://lordzuko.github.io/uoe/index.xml" rel="self" type="application/rss+xml"/><item><title>Week 3</title><link>https://lordzuko.github.io/UoE/NLU/Week3/</link><pubDate>Mon, 01 May 2023 12:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/NLU/Week3/</guid><description>This is a summary of week 3</description><content:encoded><![CDATA[<p><strong>Attention Model Intuition</strong></p>
+<h1 id="seq2seq-models-with-attention">Seq2Seq Models with Attention</h1>
+<p>In a sequence-to-sequence (seq2seq) encoder-decoder model with attention, the goal is to generate a sequence of output tokens based on a sequence of input tokens. The model consists of two parts: an encoder that processes the input sequence and a decoder that generates the output sequence. The attention mechanism is used in the decoder to help the model focus on the most relevant parts of the input sequence while generating each output token.</p>
+<p>The attention mechanism works as follows:</p>
+<ol>
+<li>
+<p>The encoder produces a sequence of hidden states $h_1, h_2, &hellip;, h_n$ that represent the input sequence.</p>
+</li>
+<li>
+<p>At each step $t$ of the decoder, the decoder produces a hidden state $s_t$ that represents the decoder&rsquo;s current state.</p>
+</li>
+<li>
+<p>The attention mechanism calculates a set of attention weights $a^t_1, a^t_2, &hellip;, a^t_n$ that indicate how much attention should be given to each hidden state $h_i$ of the encoder when generating the output at step $t$ of the decoder.</p>
+<ol>
+<li>The attention weights are used to compute a context vector $c_t$ that is a weighted sum of the encoder hidden states, where each hidden state is weighted by its corresponding attention weight:</li>
+</ol>
+</li>
+</ol>
+<p>$$c_t = \sum_{i=1}^{n} a^t_i h_i$$</p>
+<ol start="5">
+<li>The context vector $c_t$ is concatenated with the decoder hidden state $s_t$ to form a combined vector $z_t$:</li>
+</ol>
+<p>$$z_t = [c_t; s_t]$$</p>
+<p>where $[;]$ denotes concatenation.</p>
+<ol start="6">
+<li>The combined vector $z_t$ is used to predict the probability distribution over the output vocabulary using a softmax function:</li>
+</ol>
+<p>$$P_{vocab} = \text{softmax}(V&rsquo;^T(Vz_t + b&rsquo;)$$</p>
+<p>where $V&rsquo;$ is a weight matrix and $b&rsquo;$ is a bias term.</p>
+<p>The attention weights $a^t_i$ are calculated using the following equations:</p>
+<p>$$e_i^t= v^T \text{tanh}(W_h h_i + W_s s_t + b_{attn})$$</p>
+<p>$$a^t_i = \frac{\text{exp}(e_i^t)}{\sum_{j=1}^{n} \text{exp}(e_j^t)}$$</p>
+<p>where $v$, $W_h$, $W_s$, and $b_{attn}$ are learnable parameters.</p>
+<p>The first equation computes a score $e_i^t$ for each encoder hidden state $h_i$ based on the decoder hidden state $s_t$. The second equation applies a softmax function to the scores to obtain the attention weights $a^t_i$ that sum to 1. The attention weights indicate the relative importance of each encoder hidden state $h_i$ at the current step $t$ of the decoder.</p>
+<p>By using the attention mechanism, the model can selectively focus on different parts of the input sequence at each step of the decoder, improving the model&rsquo;s ability to generate accurate and relevant output tokens.</p>
+<h1 id="transformers">Transformers</h1>
+<blockquote>
+<p><strong>Calculating the parameters of transformers:</strong></p>
+</blockquote>
+<ul>
+<li>
+<p>
+
+<a target=“_blank” href="https://stackoverflow.com/a/71472362" rel="noopener">https://stackoverflow.com/a/71472362</a></p>
+<p>
+
+<a target=“_blank” href="https://i.stack.imgur.com/BhVnx.png" rel="noopener">Transformer Encoder-Decoder Architecture</a> The BERT model contains only the encoder block of the transformer architecture. Let&rsquo;s look at individual elements of an encoder block for BERT to visualize the number weight matrices as well as the bias vectors. The given configuration L = 12 means there will be 12 layers of self attention, H = 768 means that the embedding dimension of individual tokens will be of 768 dimensions, A = 12 means there will be 12 attention heads in one layer of self attention. The encoder block performs the following sequence of operations:</p>
+<ol>
+<li>
+<p>The input will be the sequence of tokens as a matrix of S * d dimension. Where s is the sequence length and d is the embedding dimension. The resultant input sequence will be the sum of token embeddings, token type embeddings as well as position embedding as a d-dimensional vector for each token. In the BERT model, the first set of parameters is the vocabulary embeddings. BERT uses WordPiece[
+
+<a target=“_blank” href="https://arxiv.org/abs/1609.08144" rel="noopener">2</a>] embeddings that has 30522 tokens. Each token is of 768 dimensions.</p>
+</li>
+<li>
+<p>Embedding layer normalization. One weight matrix and one bias vector.</p>
+</li>
+<li>
+<p>Multi-head self attention. There will be h number of heads, and for each head there will be three matrices which will correspond to query matrix, key matrix and the value matrix. The first dimension of these matrices will be the embedding dimension and the second dimension will be the embedding dimension divided by the number of attention heads. Apart from this, there will be one more matrix to transform the concatenated values generated by attention heads to the final token representation.</p>
+</li>
+<li>
+<p>Residual connection and layer normalization. One weight matrix and one bias vector.</p>
+</li>
+<li>
+<p>Position-wise feedforward network will have one hidden layer, that will correspond to two weight matrices and two bias vectors. In the paper, it is mentioned that the number of units in the hidden layer will be four times the embedding dimension.</p>
+</li>
+<li>
+<p>Residual connection and layer normalization. One weight matrix and one bias vector.</p>
+</li>
+</ol>
+<p>Let&rsquo;s calculate the actual number of parameters by associating the right dimensions to the weight matrices and bias vectors for the BERT base model.</p>
+<p><strong>Embedding Matrices:</strong></p>
+<ul>
+<li>
+<p>Word Embedding Matrix size [Vocabulary size, embedding dimension] = [30522, 768] = 23440896</p>
+</li>
+<li>
+<p>Position embedding matrix size, [Maximum sequence length, embedding dimension] = [512, 768] = 393216</p>
+</li>
+<li>
+<p>Token Type Embedding matrix size [2, 768] = 1536</p>
+</li>
+<li>
+<p>Embedding Layer Normalization, weight and Bias [768] + [768] = 1536</p>
+</li>
+<li>
+<p>Total Embedding parameters = <strong>𝟐𝟑𝟖𝟑𝟕𝟏𝟖𝟒 ≈ 𝟐𝟒𝑴</strong>
+<strong>Attention Head:</strong></p>
+</li>
+<li>
+<p>Query Weight Matrix size [768, 64] = 49152 and Bias [768] = 768</p>
+</li>
+<li>
+<p>Key Weight Matrix size [768, 64] = 49152 and Bias [768] = 768</p>
+</li>
+<li>
+<p>Value Weight Matrix size [768, 64] = 49152 and Bias [768] = 768</p>
+</li>
+<li>
+<p>Total parameters for one layer attention with 12 heads = 12∗(3 ∗(49152+768)) = 1797120</p>
+</li>
+<li>
+<p>Dense weight for projection after concatenation of heads [768, 768] = 589824 and Bias [768] = 768, (589824+768 = 590592)</p>
+</li>
+<li>
+<p>Layer Normalization weight and Bias [768], [768] = 1536</p>
+</li>
+<li>
+<p>Position wise feedforward network weight matrices and bias [3072, 768] = 2359296, [3072] = 3072 and [768, 3072 ] = 2359296, [768] = 768, (2359296+3072+ 2359296+768 = 4722432)</p>
+</li>
+<li>
+<p>Layer Normalization weight and Bias [768], [768] = 1536</p>
+</li>
+<li>
+<p>Total parameters for one complete attention layer (1797120 + 590592 + 1536 + 4722432 + 1536 = <strong>7113216 ≈ 7𝑀</strong>)</p>
+</li>
+<li>
+<p>Total parameters for 12 layers of attention (𝟏𝟐 ∗ 𝟕𝟏𝟏𝟑𝟐𝟏𝟔 = <strong>𝟖𝟓𝟑𝟓𝟖𝟓𝟗𝟐 ≈ 𝟖𝟓𝑴</strong>)</p>
+</li>
+</ul>
+<p><strong>Output layer of BERT Encoder:</strong></p>
+<ul>
+<li>Dense Weight Matrix and Bias [768, 768] = 589824, [768] = 768, (589824 + 768 = 590592)
+<em>Total Parameters in 𝑩𝑬𝑹𝑻 𝑩ase = 𝟐𝟑𝟖𝟑𝟕𝟏𝟖𝟒 + 𝟖𝟓𝟑𝟓𝟖𝟓𝟗𝟐 + 𝟓𝟗𝟎𝟓𝟗𝟐 = <strong>𝟏𝟎𝟗𝟕𝟖𝟔𝟑𝟔𝟖 ≈ 𝟏𝟏𝟎𝑴</strong></em></li>
+</ul>
+</li>
+</ul>
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/CSAI/Summary/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/CSAI/Summary/</guid><description/><content:encoded></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/MLPR/Probabilistic-Models-in-TTS/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/MLPR/Probabilistic-Models-in-TTS/</guid><description>In this note I am trying to understand what does Variational means in models like Variational Autoencoders , Variational Inference etc.
 This is an interesting setting and after going through everything which is discussed below, it doesn&amp;rsquo;t sounds that complicated.</description><content:encoded><![CDATA[<p>In this note I am trying to understand what does <code>Variational</code> means in models like <code>Variational Autoencoders</code> , <code>Variational Inference</code> etc.</p>
 <p>This is an interesting setting and after going through everything which is discussed below, it doesn&rsquo;t sounds that complicated. Often the papers, makes things too convoluted, but there are only a few things to keep in mind. There are a few steps, which are taken to make the model probabilistic, which will be made clear as you go through the explanations one by one and do look at the code and things won&rsquo;t seem that scary anymore.</p>
 <p>Also, I was curious about how probabilistic modeling works for Neural networks, they talked some of that in MLPR, but they made it sound all too complicated. However, looking at the code it doesn&rsquo;t seem that complicated. All we do is draw weights and biases in various layers in the neural networks from a gausssian or some other distribution. Now, instead of giving a point wise prediction, we get a number of predictions for every point, which can be used to know uncertainty in predictions. Generally, non-bayesian neural network gives the mean-prediction, but now we have a distribution over prediction, where the variance term tells about the certainty or confidence of prediction. Frameworks like !(Pyro)[https://num.pyro.ai/en/stable/getting_started.html] makes it easier to implement various probabilistic models, including Bayesian Neural Netwoks. We will see an example towards the end of the note.</p>
@@ -1262,7 +1388,7 @@ $P(V_t, \omega(t) = j | \omega_0) = \sum_i P(V_t, \omega(t) = j, \omega(t-1) = i
 </ol>
 <p><strong>Linear discriminant functions assume that the decision boundaries between classes are linear.</strong> While they may not capture complex relationships present in the data, linear classifiers can be effective when classes are separable by linear decision boundaries or in situations where interpretability and simplicity are important.</p>
 <p>Overall, linear discriminant functions play a crucial role in classification tasks by separating data points based on linear decision boundaries or hyperplanes, enabling the prediction of class labels for unseen data.</p>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/NLU/Topics-Tracker/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/NLU/Topics-Tracker/</guid><description> Week 1 (Machine Translation) Introduction Machine Translation Conditional Language Models (with n-grams) Week 2 (Language Models) Feedforward Language Models RNN LSTM GRU Week 3 Seq2Seq Models with attention Transformers Week 4 Word Embeddings Pretrained Language Models Week 5 Prompting Evaluation of MT Week 6 Open Vocabulary Models Low Resource MT NLP Ethics Week 7 Bias in Embeddings and Language Models Summarization 1 Summarization 2 Week 8 Summarization 3 Week 9 Neural Parsing Unsupervised Parsing Week 10 Movie Summarization Tutorials Tutorial 1 - Language Models Tutorial 2 - Neural Network Language Models Tutorial 3 - Transformers Tutorial 4 - Ethics in NLP Tutorial 5 - Summarization</description><content:encoded><![CDATA[<h2 id="week-1-machine-translationweek1">
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/NLU/NLU/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/NLU/NLU/</guid><description> Week 1 (Machine Translation) Introduction Machine Translation Conditional Language Models (with n-grams) Week 2 (Language Models) Feedforward Language Models RNN LSTM GRU Week 3 Seq2Seq Models with attention Transformers Week 4 Word Embeddings Pretrained Language Models Week 5 Prompting Evaluation of MT Week 6 Open Vocabulary Models Low Resource MT NLP Ethics Week 7 Bias in Embeddings and Language Models Summarization 1 Summarization 2 Week 8 Summarization 3 Week 9 Neural Parsing Unsupervised Parsing Week 10 Movie Summarization Tutorials Tutorial 1 - Language Models Tutorial 2 - Neural Network Language Models Tutorial 3 - Transformers Tutorial 4 - Ethics in NLP Tutorial 5 - Summarization</description><content:encoded><![CDATA[<h2 id="week-1-machine-translationweek1">
 
 
 
@@ -1824,133 +1950,6 @@ $h_t = o_t * \tanh(C_t)$</p>
 In GRUs, the candidate hidden state is computed as the element-wise product of the reset gate $r_t$ and the previous hidden state $h_{t-1}$, which is then concatenated with the input $x_t$ and transformed by a weight matrix W_h and an activation function tanh. In contrast, in LSTMs, the candidate memory cell $\tilde{C}<em>t$ is computed separately from the input $x_t$ and the previous hidden state $h</em>{t-1}$, using a weight matrix $W_C$ and an activation function $tanh$.
 Furthermore, the memory cell $C_t$ in LSTMs is updated using both the forget gate $f_t$ (which controls how much of the previous memory cell state to retain) and the input gate $i_t$ (which controls how much of the new candidate memory cell value to use). The hidden state $h_t$ is then computed using the output gate $o_t$ (which controls how much of the memory cell state to output) and the updated memory cell $C_t$. In GRUs, the hidden state is computed directly using the candidate hidden state and the update gate $z_t$.</p>
 <p>The differences in architecture between GRUs and LSTMs have implications for their performance in different tasks. For example, GRUs may be more suitable for tasks that require faster training and less complex models, while LSTMs may be more suitable for tasks that require modeling more complex dependencies and handling longer sequences of data.</p>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/NLU/Week3/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/NLU/Week3/</guid><description>Attention Model Intuition
-Seq2Seq Models with Attention In a sequence-to-sequence (seq2seq) encoder-decoder model with attention, the goal is to generate a sequence of output tokens based on a sequence of input tokens.</description><content:encoded><![CDATA[<p><strong>Attention Model Intuition</strong></p>
-<h1 id="seq2seq-models-with-attention">Seq2Seq Models with Attention</h1>
-<p>In a sequence-to-sequence (seq2seq) encoder-decoder model with attention, the goal is to generate a sequence of output tokens based on a sequence of input tokens. The model consists of two parts: an encoder that processes the input sequence and a decoder that generates the output sequence. The attention mechanism is used in the decoder to help the model focus on the most relevant parts of the input sequence while generating each output token.</p>
-<p>The attention mechanism works as follows:</p>
-<ol>
-<li>
-<p>The encoder produces a sequence of hidden states $h_1, h_2, &hellip;, h_n$ that represent the input sequence.</p>
-</li>
-<li>
-<p>At each step $t$ of the decoder, the decoder produces a hidden state $s_t$ that represents the decoder&rsquo;s current state.</p>
-</li>
-<li>
-<p>The attention mechanism calculates a set of attention weights $a^t_1, a^t_2, &hellip;, a^t_n$ that indicate how much attention should be given to each hidden state $h_i$ of the encoder when generating the output at step $t$ of the decoder.</p>
-<ol>
-<li>The attention weights are used to compute a context vector $c_t$ that is a weighted sum of the encoder hidden states, where each hidden state is weighted by its corresponding attention weight:</li>
-</ol>
-</li>
-</ol>
-<p>$$c_t = \sum_{i=1}^{n} a^t_i h_i$$</p>
-<ol start="5">
-<li>The context vector $c_t$ is concatenated with the decoder hidden state $s_t$ to form a combined vector $z_t$:</li>
-</ol>
-<p>$$z_t = [c_t; s_t]$$</p>
-<p>where $[;]$ denotes concatenation.</p>
-<ol start="6">
-<li>The combined vector $z_t$ is used to predict the probability distribution over the output vocabulary using a softmax function:</li>
-</ol>
-<p>$$P_{vocab} = \text{softmax}(V&rsquo;^T(Vz_t + b&rsquo;)$$</p>
-<p>where $V&rsquo;$ is a weight matrix and $b&rsquo;$ is a bias term.</p>
-<p>The attention weights $a^t_i$ are calculated using the following equations:</p>
-<p>$$e_i^t= v^T \text{tanh}(W_h h_i + W_s s_t + b_{attn})$$</p>
-<p>$$a^t_i = \frac{\text{exp}(e_i^t)}{\sum_{j=1}^{n} \text{exp}(e_j^t)}$$</p>
-<p>where $v$, $W_h$, $W_s$, and $b_{attn}$ are learnable parameters.</p>
-<p>The first equation computes a score $e_i^t$ for each encoder hidden state $h_i$ based on the decoder hidden state $s_t$. The second equation applies a softmax function to the scores to obtain the attention weights $a^t_i$ that sum to 1. The attention weights indicate the relative importance of each encoder hidden state $h_i$ at the current step $t$ of the decoder.</p>
-<p>By using the attention mechanism, the model can selectively focus on different parts of the input sequence at each step of the decoder, improving the model&rsquo;s ability to generate accurate and relevant output tokens.</p>
-<h1 id="transformers">Transformers</h1>
-<blockquote>
-<p><strong>Calculating the parameters of transformers:</strong></p>
-</blockquote>
-<ul>
-<li>
-<p>
-
-<a target=“_blank” href="https://stackoverflow.com/a/71472362" rel="noopener">https://stackoverflow.com/a/71472362</a></p>
-<p>
-
-<a target=“_blank” href="https://i.stack.imgur.com/BhVnx.png" rel="noopener">Transformer Encoder-Decoder Architecture</a> The BERT model contains only the encoder block of the transformer architecture. Let&rsquo;s look at individual elements of an encoder block for BERT to visualize the number weight matrices as well as the bias vectors. The given configuration L = 12 means there will be 12 layers of self attention, H = 768 means that the embedding dimension of individual tokens will be of 768 dimensions, A = 12 means there will be 12 attention heads in one layer of self attention. The encoder block performs the following sequence of operations:</p>
-<ol>
-<li>
-<p>The input will be the sequence of tokens as a matrix of S * d dimension. Where s is the sequence length and d is the embedding dimension. The resultant input sequence will be the sum of token embeddings, token type embeddings as well as position embedding as a d-dimensional vector for each token. In the BERT model, the first set of parameters is the vocabulary embeddings. BERT uses WordPiece[
-
-<a target=“_blank” href="https://arxiv.org/abs/1609.08144" rel="noopener">2</a>] embeddings that has 30522 tokens. Each token is of 768 dimensions.</p>
-</li>
-<li>
-<p>Embedding layer normalization. One weight matrix and one bias vector.</p>
-</li>
-<li>
-<p>Multi-head self attention. There will be h number of heads, and for each head there will be three matrices which will correspond to query matrix, key matrix and the value matrix. The first dimension of these matrices will be the embedding dimension and the second dimension will be the embedding dimension divided by the number of attention heads. Apart from this, there will be one more matrix to transform the concatenated values generated by attention heads to the final token representation.</p>
-</li>
-<li>
-<p>Residual connection and layer normalization. One weight matrix and one bias vector.</p>
-</li>
-<li>
-<p>Position-wise feedforward network will have one hidden layer, that will correspond to two weight matrices and two bias vectors. In the paper, it is mentioned that the number of units in the hidden layer will be four times the embedding dimension.</p>
-</li>
-<li>
-<p>Residual connection and layer normalization. One weight matrix and one bias vector.</p>
-</li>
-</ol>
-<p>Let&rsquo;s calculate the actual number of parameters by associating the right dimensions to the weight matrices and bias vectors for the BERT base model.</p>
-<p><strong>Embedding Matrices:</strong></p>
-<ul>
-<li>
-<p>Word Embedding Matrix size [Vocabulary size, embedding dimension] = [30522, 768] = 23440896</p>
-</li>
-<li>
-<p>Position embedding matrix size, [Maximum sequence length, embedding dimension] = [512, 768] = 393216</p>
-</li>
-<li>
-<p>Token Type Embedding matrix size [2, 768] = 1536</p>
-</li>
-<li>
-<p>Embedding Layer Normalization, weight and Bias [768] + [768] = 1536</p>
-</li>
-<li>
-<p>Total Embedding parameters = <strong>𝟐𝟑𝟖𝟑𝟕𝟏𝟖𝟒 ≈ 𝟐𝟒𝑴</strong>
-<strong>Attention Head:</strong></p>
-</li>
-<li>
-<p>Query Weight Matrix size [768, 64] = 49152 and Bias [768] = 768</p>
-</li>
-<li>
-<p>Key Weight Matrix size [768, 64] = 49152 and Bias [768] = 768</p>
-</li>
-<li>
-<p>Value Weight Matrix size [768, 64] = 49152 and Bias [768] = 768</p>
-</li>
-<li>
-<p>Total parameters for one layer attention with 12 heads = 12∗(3 ∗(49152+768)) = 1797120</p>
-</li>
-<li>
-<p>Dense weight for projection after concatenation of heads [768, 768] = 589824 and Bias [768] = 768, (589824+768 = 590592)</p>
-</li>
-<li>
-<p>Layer Normalization weight and Bias [768], [768] = 1536</p>
-</li>
-<li>
-<p>Position wise feedforward network weight matrices and bias [3072, 768] = 2359296, [3072] = 3072 and [768, 3072 ] = 2359296, [768] = 768, (2359296+3072+ 2359296+768 = 4722432)</p>
-</li>
-<li>
-<p>Layer Normalization weight and Bias [768], [768] = 1536</p>
-</li>
-<li>
-<p>Total parameters for one complete attention layer (1797120 + 590592 + 1536 + 4722432 + 1536 = <strong>7113216 ≈ 7𝑀</strong>)</p>
-</li>
-<li>
-<p>Total parameters for 12 layers of attention (𝟏𝟐 ∗ 𝟕𝟏𝟏𝟑𝟐𝟏𝟔 = <strong>𝟖𝟓𝟑𝟓𝟖𝟓𝟗𝟐 ≈ 𝟖𝟓𝑴</strong>)</p>
-</li>
-</ul>
-<p><strong>Output layer of BERT Encoder:</strong></p>
-<ul>
-<li>Dense Weight Matrix and Bias [768, 768] = 589824, [768] = 768, (589824 + 768 = 590592)
-<em>Total Parameters in 𝑩𝑬𝑹𝑻 𝑩ase = 𝟐𝟑𝟖𝟑𝟕𝟏𝟖𝟒 + 𝟖𝟓𝟑𝟓𝟖𝟓𝟗𝟐 + 𝟓𝟗𝟎𝟓𝟗𝟐 = <strong>𝟏𝟎𝟗𝟕𝟖𝟔𝟑𝟔𝟖 ≈ 𝟏𝟏𝟎𝑴</strong></em></li>
-</ul>
-</li>
-</ul>
 ]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/NLU/Week4/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/NLU/Week4/</guid><description>Word Embeddings Readings:
 Efficient estimation of word representations in vector space. Mikolov et al., NIPS Workshop 2013.
 Contextual word representations: A contextual introduction. Smith, 2019. This paper provides a conceptual overview of word embeddings, and explains why contextualized embeddings are an important innovation</description><content:encoded><![CDATA[<h1 id="word-embeddings">Word Embeddings</h1>

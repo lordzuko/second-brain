@@ -252,13 +252,8 @@ We may specify the measure of events in the event space, one at a time.</descrip
 <li>We may specify the measure of events in the event space, one at a time. This is very tedious and sometimes impossible (eg. all the subsets of natural numbers) 
 
 <img src="/../../figures/Screenshot%202023-06-13%20at%202.05.20%20PM.png" alt="Screenshot 2023-06-13 at 2.05.20 PM.png"  /></li>
-<li>We may instead specify a probability mass or density function (PMF or PDF) for outcomes of a random variable 1Using probability distribution - changing parameters (PDF) 
-
-<img src="/../../../../Screenshot%202023-06-13%20at%202.06.22%20PM.png" alt="Screenshot 2023-06-13 at 2.06.22 PM.png"  /></li>
-<li>We may instead specify the cumulative distribution functions (CDF) of an RV, the CDF in turn identifies a PDF, the RV and its PDF identify a probabilistic measure
-
-
-<img src="/../../../../Screenshot%202023-06-13%20at%202.10.13%20PM.png" alt="Screenshot 2023-06-13 at 2.10.13 PM.png"  /></li>
+<li>We may instead specify a probability mass or density function (PMF or PDF) for outcomes of a random variable 1Using probability distribution - changing parameters (PDF)</li>
+<li>We may instead specify the cumulative distribution functions (CDF) of an RV, the CDF in turn identifies a PDF, the RV and its PDF identify a probabilistic measure</li>
 </ul>
 ]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/AI/Probabilistic-Modeling/UVA/Deep-Learning-Course-II/UVA-Deep-Learning-II-Course/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/AI/Probabilistic-Modeling/UVA/Deep-Learning-Course-II/UVA-Deep-Learning-II-Course/</guid><description>https://uvadl2c.github.io/
 Score-Based Generative Modeling https://yang-song.net/blog/2021/score/
