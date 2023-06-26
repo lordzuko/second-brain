@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Himanshu Maurya</title><link>https://lordzuko.github.io/papers/</link><description>Recent content from Himanshu Maurya's Digital Garden</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://lordzuko.github.io/papers/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://lordzuko.github.io/Papers/Speech-Synthesis/Categoris-of-Models/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/Papers/Speech-Synthesis/Categoris-of-Models/</guid><description> Autoregressive WaveNet WaveRNN GAN MelGAN Parallel WaveGAN Diffusion WaveGrad DiffWave</description><content:encoded><![CDATA[<ul>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Himanshu Maurya</title><link>https://lordzuko.github.io/second-brain/papers/</link><description>Recent content from Himanshu Maurya's Digital Garden</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://lordzuko.github.io/second-brain/papers/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://lordzuko.github.io/second-brain/Papers/Speech-Synthesis/Categoris-of-Models/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/Papers/Speech-Synthesis/Categoris-of-Models/</guid><description> Autoregressive WaveNet WaveRNN GAN MelGAN Parallel WaveGAN Diffusion WaveGrad DiffWave</description><content:encoded><![CDATA[<ul>
 <li><em>Autoregressive</em>
 <ul>
 <li><em>WaveNet</em></li>
@@ -18,17 +18,17 @@
 </ul>
 </li>
 </ul>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/Papers/Speech-Synthesis/Datasets/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/Papers/Speech-Synthesis/Datasets/</guid><description> LJ Speech LibriTTS VCTK</description><content:encoded><![CDATA[<ul>
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/Papers/Speech-Synthesis/Datasets/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/Papers/Speech-Synthesis/Datasets/</guid><description> LJ Speech LibriTTS VCTK</description><content:encoded><![CDATA[<ul>
 <li><em>LJ Speech</em></li>
 <li><em>LibriTTS</em></li>
 <li><em>VCTK</em></li>
 </ul>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/Papers/Speech-Synthesis/Diffusion/Grad-TTS/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/Papers/Speech-Synthesis/Diffusion/Grad-TTS/</guid><description> Atli&amp;rsquo;s Notes: https://docs.google.com/presentation/d/1-SVmRGUJw7dA3zs7duvpFq_JthljMtF0LbUMyRMSZCQ/edit#slide=id.p</description><content:encoded><![CDATA[<ul>
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/Papers/Speech-Synthesis/Diffusion/Grad-TTS/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/Papers/Speech-Synthesis/Diffusion/Grad-TTS/</guid><description> Atli&amp;rsquo;s Notes: https://docs.google.com/presentation/d/1-SVmRGUJw7dA3zs7duvpFq_JthljMtF0LbUMyRMSZCQ/edit#slide=id.p</description><content:encoded><![CDATA[<ul>
 <li>Atli&rsquo;s Notes: 
 
 <a target=“_blank” href="https://docs.google.com/presentation/d/1-SVmRGUJw7dA3zs7duvpFq_JthljMtF0LbUMyRMSZCQ/edit#slide=id.p" rel="noopener">https://docs.google.com/presentation/d/1-SVmRGUJw7dA3zs7duvpFq_JthljMtF0LbUMyRMSZCQ/edit#slide=id.p</a></li>
 </ul>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/Papers/Speech-Synthesis/Metrics/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/Papers/Speech-Synthesis/Metrics/</guid><description>Mean Opinion Score (MOS)
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/Papers/Speech-Synthesis/Metrics/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/Papers/Speech-Synthesis/Metrics/</guid><description>Mean Opinion Score (MOS)
 Objective evaluation metric for quality measurement Frechet Audio Distance (FAD)
 Objective evaluation metric for quality measurement FAD score is the distance between two multivariate Gaussian distributins (i.</description><content:encoded><![CDATA[<ul>
 <li>
