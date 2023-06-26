@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Himanshu Maurya</title><link>https://lordzuko.github.io/second-brain/thesis/</link><description>Recent content from Himanshu Maurya's Digital Garden</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://lordzuko.github.io/second-brain/thesis/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://lordzuko.github.io/second-brain/Thesis/Abstract/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/Thesis/Abstract/</guid><description>Topic: Aligning latent space of speaking style with human perception using a re-embedding strategy [sigurgeirsson:speaking-style]
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Himanshu Maurya</title><link>https://lordzuko.github.io/thesis/</link><description>Recent content from Himanshu Maurya's Digital Garden</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://lordzuko.github.io/thesis/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://lordzuko.github.io/Thesis/Abstract/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/Thesis/Abstract/</guid><description>Topic: Aligning latent space of speaking style with human perception using a re-embedding strategy [sigurgeirsson:speaking-style]
 To generate appropriate speech in context, we must not only consider what is said but also how it is said.</description><content:encoded><![CDATA[<p><strong>Topic:</strong> <strong>
 
 <a target=“_blank” href="https://www.wiki.ed.ac.uk/pages/viewpage.action?spaceKey=CSTR&amp;title=SLP&#43;project&#43;list&#43;2022-23" rel="noopener">Aligning latent space of speaking style with human perception using a re-embedding strategy [sigurgeirsson:speaking-style]</a></strong></p>
@@ -32,7 +32,7 @@ To generate appropriate speech in context, we must not only consider what is sai
 <p>[9] 
 
 <a target=“_blank” href="https://arxiv.org/abs/2206.10256" rel="noopener">Human-in-the-loop Speaker Adaptation for DNN-based Multi-speaker TTS</a></p>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/Thesis/Background/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/Thesis/Background/</guid><description>Architectures Tacotron Tacotron2 FastPitch FastSpeech2 Prosody Prosody Control: Ctrl+P [8] Effective use of variational embedding capacity in expressive end-to-end speech synthesis Style Tokens Globle Style Tokens: Works on Speaking Style What is speaking style?</description><content:encoded><![CDATA[<h2 id="architectures">Architectures</h2>
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/Thesis/Background/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/Thesis/Background/</guid><description>Architectures Tacotron Tacotron2 FastPitch FastSpeech2 Prosody Prosody Control: Ctrl+P [8] Effective use of variational embedding capacity in expressive end-to-end speech synthesis Style Tokens Globle Style Tokens: Works on Speaking Style What is speaking style?</description><content:encoded><![CDATA[<h2 id="architectures">Architectures</h2>
 <ul>
 <li>Tacotron</li>
 <li>Tacotron2</li>
@@ -57,7 +57,7 @@ To generate appropriate speech in context, we must not only consider what is sai
 <h2 id="speaking-style">Speaking Style</h2>
 <p>What is speaking style? How is this different from Prosody? What is done for Speaking Style so far? What doesn&rsquo;t seem to fit the equation? (Challenges) What we think is a good/expected outcome? (expectation) What can be done to reach there?</p>
 <p>We are modeling speaking style to improve perception of a limited set of speaking styles</p>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/Thesis/Dataset/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/Thesis/Dataset/</guid><description>Well maintained lihttps://github.com/coqui-ai/open-speech-corpora
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/Thesis/Dataset/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/Thesis/Dataset/</guid><description>Well maintained lihttps://github.com/coqui-ai/open-speech-corpora
 Potential Source https://speechresearch.github.io/prompttts/#dataset
 5 different style factors (gender, pitch, speaking speed, volume, and emotion) from a commercial TTS API The emotion factor has 5 categories Thee gender factor has 2 categories rest of style factors including pitch, speaking speed, and volume, we extract the value of style factors from speech with signal processing tools divided into 3 categories (high/normal/low) we ask experts to write style prompts for each category further augment the style prompts, we utilize SimBERT to generate more style prompts with similar semantics.</description><content:encoded><![CDATA[<p>Well maintained lihttps://github.com/coqui-ai/open-speech-corpora</p>
 <p>Potential Source
@@ -153,7 +153,7 @@ animated and emotive storytelling style. Some books contain  very expressive cha
 <a target=“_blank” href="https://huggingface.co/blog/audio-datasets" rel="noopener">1</a>​.</p>
 </li>
 </ol>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/Thesis/Dissertation/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/Thesis/Dissertation/</guid><description> Abstract Background Dataset</description><content:encoded><![CDATA[<ul>
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/Thesis/Dissertation/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/Thesis/Dissertation/</guid><description> Abstract Background Dataset</description><content:encoded><![CDATA[<ul>
 <li>
 
 
@@ -161,9 +161,9 @@ animated and emotive storytelling style. Some books contain  very expressive cha
 
 
 <a
-  href="/second-brain/Thesis/Abstract/"
+  href="/Thesis/Abstract/"
   rel="noopener" class="internal-link"
-  data-src="/second-brain/Thesis/Abstract/">Abstract</a></li>
+  data-src="/Thesis/Abstract/">Abstract</a></li>
 <li>
 
 
@@ -171,9 +171,9 @@ animated and emotive storytelling style. Some books contain  very expressive cha
 
 
 <a
-  href="/second-brain/Thesis/Background/"
+  href="/Thesis/Background/"
   rel="noopener" class="internal-link"
-  data-src="/second-brain/Thesis/Background/">Background</a></li>
+  data-src="/Thesis/Background/">Background</a></li>
 <li>
 
 
@@ -181,8 +181,8 @@ animated and emotive storytelling style. Some books contain  very expressive cha
 
 
 <a
-  href="/second-brain/Thesis/Dataset/"
+  href="/Thesis/Dataset/"
   rel="noopener" class="internal-link"
-  data-src="/second-brain/Thesis/Dataset/">Dataset</a></li>
+  data-src="/Thesis/Dataset/">Dataset</a></li>
 </ul>
 ]]></content:encoded></item></channel></rss>

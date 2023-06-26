@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Himanshu Maurya</title><link>https://lordzuko.github.io/second-brain/Mathematics-for-ML/</link><description>Recent content from Himanshu Maurya's Digital Garden</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://lordzuko.github.io/second-brain/Mathematics-for-ML/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://lordzuko.github.io/second-brain/Mathematics-for-ML/Mathematics-for-ML/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/Mathematics-for-ML/Mathematics-for-ML/</guid><description> Maths for ML Numerics of Machine Learning - 2023 Probabilistic Machine Learning Quick ML for DL Deep Probabilistic Models</description><content:encoded><![CDATA[<ul>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Himanshu Maurya</title><link>https://lordzuko.github.io/Mathematics-for-ML/</link><description>Recent content from Himanshu Maurya's Digital Garden</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://lordzuko.github.io/Mathematics-for-ML/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://lordzuko.github.io/Mathematics-for-ML/Mathematics-for-ML/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/Mathematics-for-ML/Mathematics-for-ML/</guid><description> Maths for ML Numerics of Machine Learning - 2023 Probabilistic Machine Learning Quick ML for DL Deep Probabilistic Models</description><content:encoded><![CDATA[<ul>
 <li>
 
 
@@ -6,9 +6,9 @@
 
 
 <a
-  href="/second-brain/Mathematics-for-ML/Maths-for-ML/"
+  href="/Mathematics-for-ML/Maths-for-ML/"
   rel="noopener" class="internal-link"
-  data-src="/second-brain/Mathematics-for-ML/Maths-for-ML/">Maths for ML</a></li>
+  data-src="/Mathematics-for-ML/Maths-for-ML/">Maths for ML</a></li>
 <li>
 
 
@@ -16,9 +16,9 @@
 
 
 <a
-  href="/second-brain/Mathematics-for-ML/Numerics-of-Machine-Learning-2023/"
+  href="/Mathematics-for-ML/Numerics-of-Machine-Learning-2023/"
   rel="noopener" class="internal-link"
-  data-src="/second-brain/Mathematics-for-ML/Numerics-of-Machine-Learning-2023/">Numerics of Machine Learning - 2023</a></li>
+  data-src="/Mathematics-for-ML/Numerics-of-Machine-Learning-2023/">Numerics of Machine Learning - 2023</a></li>
 <li>
 
 
@@ -26,9 +26,9 @@
 
 
 <a
-  href="/second-brain/Mathematics-for-ML/Probabilistic-Machine-Learning/"
+  href="/Mathematics-for-ML/Probabilistic-Machine-Learning/"
   rel="noopener" class="internal-link"
-  data-src="/second-brain/Mathematics-for-ML/Probabilistic-Machine-Learning/">Probabilistic Machine Learning</a></li>
+  data-src="/Mathematics-for-ML/Probabilistic-Machine-Learning/">Probabilistic Machine Learning</a></li>
 <li>
 
 
@@ -36,9 +36,9 @@
 
 
 <a
-  href="/second-brain/Mathematics-for-ML/Quick-ML-for-DL/"
+  href="/Mathematics-for-ML/Quick-ML-for-DL/"
   rel="noopener" class="internal-link"
-  data-src="/second-brain/Mathematics-for-ML/Quick-ML-for-DL/">Quick ML for DL</a></li>
+  data-src="/Mathematics-for-ML/Quick-ML-for-DL/">Quick ML for DL</a></li>
 <li>
 
 
@@ -46,11 +46,11 @@
 
 
 <a
-  href="/second-brain/AI/Probabilistic-Modeling/UVA/Deep-Learning-Course-II/Deep-Probabilistic-Models/"
+  href="/AI/Probabilistic-Modeling/UVA/Deep-Learning-Course-II/Deep-Probabilistic-Models/"
   rel="noopener" class="internal-link"
-  data-src="/second-brain/AI/Probabilistic-Modeling/UVA/Deep-Learning-Course-II/Deep-Probabilistic-Models/">Deep Probabilistic Models</a></li>
+  data-src="/AI/Probabilistic-Modeling/UVA/Deep-Learning-Course-II/Deep-Probabilistic-Models/">Deep Probabilistic Models</a></li>
 </ul>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/Mathematics-for-ML/Maths-for-ML/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/Mathematics-for-ML/Maths-for-ML/</guid><description>Mathematics for Machine Learning — Ulrike von Luxburg, 2020/21 https://www.youtube.com/playlist?list=PL05umP7R6ij1a6KdEy8PVE9zoCv6SlHRS
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/Mathematics-for-ML/Maths-for-ML/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/Mathematics-for-ML/Maths-for-ML/</guid><description>Mathematics for Machine Learning — Ulrike von Luxburg, 2020/21 https://www.youtube.com/playlist?list=PL05umP7R6ij1a6KdEy8PVE9zoCv6SlHRS
 http://www.tml.cs.uni-tuebingen.de/teaching/2020_maths_for_ml/index.php
 Statistics Foundation for Machine Learning - https://www.youtube.com/playlist?list=PLuqhl4iqeAZZMwUUdc-3pCy8LtFTGrQZL
 Written Notes: Look in written notes directory
@@ -168,7 +168,7 @@ Linear Algebra Vector Spaces Basis and Dimension Direct Sum Linear Maps, Kernel,
 <li><input disabled="" type="checkbox"> What is a convex optimisation problem?</li>
 <li><input disabled="" type="checkbox"> Convex optimisation, Lagrangian, dual problem</li>
 </ul>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/Mathematics-for-ML/Numerics-of-Machine-Learning-2023/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/Mathematics-for-ML/Numerics-of-Machine-Learning-2023/</guid><description>This class discusses both practical and theoretically interesting aspects of the algorithms that drive machine learning. It endorses the view of Probabilistic Numerics, the idea that computation itself is an inference process, to describe the numerical algorithms inside the learning machine, as learning machines.</description><content:encoded><![CDATA[<p>This class discusses both practical and theoretically interesting aspects of the algorithms that drive machine learning. It endorses the view of Probabilistic Numerics, the idea that computation itself is an inference process, to describe the numerical algorithms <em>inside</em> the learning machine, <em>as</em> learning machines.</p>
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/Mathematics-for-ML/Numerics-of-Machine-Learning-2023/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/Mathematics-for-ML/Numerics-of-Machine-Learning-2023/</guid><description>This class discusses both practical and theoretically interesting aspects of the algorithms that drive machine learning. It endorses the view of Probabilistic Numerics, the idea that computation itself is an inference process, to describe the numerical algorithms inside the learning machine, as learning machines.</description><content:encoded><![CDATA[<p>This class discusses both practical and theoretically interesting aspects of the algorithms that drive machine learning. It endorses the view of Probabilistic Numerics, the idea that computation itself is an inference process, to describe the numerical algorithms <em>inside</em> the learning machine, <em>as</em> learning machines.</p>
 <ul>
 <li>
 <p>Slides: 
@@ -223,7 +223,7 @@ Linear Algebra Vector Spaces Basis and Dimension Direct Sum Linear Maps, Kernel,
 <p><input disabled="" type="checkbox"> Lecture 14: Conclusion</p>
 </li>
 </ul>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/Mathematics-for-ML/Probabilistic-Machine-Learning/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/Mathematics-for-ML/Probabilistic-Machine-Learning/</guid><description>Philipp Hennig, 2023
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/Mathematics-for-ML/Probabilistic-Machine-Learning/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/Mathematics-for-ML/Probabilistic-Machine-Learning/</guid><description>Philipp Hennig, 2023
 https://www.youtube.com/playlist?list=PL05umP7R6ij2YE8rRJSb-olDNbntAQ_Bx
 CSC412 Winter 2020: Probabilsitic Machine Learning : https://probmlcourse.github.io/csc412/
 Lecture 1 - Introduction
@@ -274,7 +274,7 @@ Lecture 4 - Exponential Families</description><content:encoded><![CDATA[<ul>
 <p><input disabled="" type="checkbox"> Lecture 10 - GP Regression: An extensive example</p>
 </li>
 </ul>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/Mathematics-for-ML/Quick-ML-for-DL/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/Mathematics-for-ML/Quick-ML-for-DL/</guid><description> https://www.youtube.com/playlist?list=PL05umP7R6ij0bo4UtMdzEJ6TiLOqj4ZCm
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/Mathematics-for-ML/Quick-ML-for-DL/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/Mathematics-for-ML/Quick-ML-for-DL/</guid><description> https://www.youtube.com/playlist?list=PL05umP7R6ij0bo4UtMdzEJ6TiLOqj4ZCm
 MaDL Introduction Sets, Scalars, Vectors, Matrices and Tensors Adding and Multiplying Matrices and Vectors Identity and Inverse Matrices Linear Dependence and Span Vector and Matrix Norms Special Matrices and Vectors Eigenvalue and Singular Value Decomposition The trace operator and determinant Differential Calculus Vector Calculus Random Variables and Probability Distributions Common Probability Distributions Bayesian Decision Theory Expectation, Variance and Covariance Information and Entropy Kullback-Leibler Divergence The Argmin and Argmax Operators</description><content:encoded><![CDATA[<p>
 
 <a target=“_blank” href="https://www.youtube.com/playlist?list=PL05umP7R6ij0bo4UtMdzEJ6TiLOqj4ZCm" rel="noopener">https://www.youtube.com/playlist?list=PL05umP7R6ij0bo4UtMdzEJ6TiLOqj4ZCm</a></p>

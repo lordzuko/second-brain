@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Himanshu Maurya</title><link>https://lordzuko.github.io/second-brain/uoe/</link><description>Recent content from Himanshu Maurya's Digital Garden</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 01 May 2023 12:00:00 +0000</lastBuildDate><atom:link href="https://lordzuko.github.io/second-brain/uoe/index.xml" rel="self" type="application/rss+xml"/><item><title>Week 3</title><link>https://lordzuko.github.io/second-brain/UoE/NLU/Week3/</link><pubDate>Mon, 01 May 2023 12:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/UoE/NLU/Week3/</guid><description>This is a summary of week 3</description><content:encoded><![CDATA[<p><strong>Attention Model Intuition</strong></p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Himanshu Maurya</title><link>https://lordzuko.github.io/uoe/</link><description>Recent content from Himanshu Maurya's Digital Garden</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 01 May 2023 12:00:00 +0000</lastBuildDate><atom:link href="https://lordzuko.github.io/uoe/index.xml" rel="self" type="application/rss+xml"/><item><title>Week 3</title><link>https://lordzuko.github.io/UoE/NLU/Week3/</link><pubDate>Mon, 01 May 2023 12:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/NLU/Week3/</guid><description>This is a summary of week 3</description><content:encoded><![CDATA[<p><strong>Attention Model Intuition</strong></p>
 <h1 id="seq2seq-models-with-attention">Seq2Seq Models with Attention</h1>
 <p>In a sequence-to-sequence (seq2seq) encoder-decoder model with attention, the goal is to generate a sequence of output tokens based on a sequence of input tokens. The model consists of two parts: an encoder that processes the input sequence and a decoder that generates the output sequence. The attention mechanism is used in the decoder to help the model focus on the most relevant parts of the input sequence while generating each output token.</p>
 <p>The attention mechanism works as follows:</p>
@@ -124,7 +124,7 @@
 </ul>
 </li>
 </ul>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/UoE/CSAI/Summary/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/UoE/CSAI/Summary/</guid><description/><content:encoded></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/UoE/MLPR/Probabilistic-Models-in-TTS/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/UoE/MLPR/Probabilistic-Models-in-TTS/</guid><description>In this note I am trying to understand what does Variational means in models like Variational Autoencoders , Variational Inference etc.
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/CSAI/Summary/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/CSAI/Summary/</guid><description/><content:encoded></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/MLPR/Probabilistic-Models-in-TTS/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/MLPR/Probabilistic-Models-in-TTS/</guid><description>In this note I am trying to understand what does Variational means in models like Variational Autoencoders , Variational Inference etc.
 This is an interesting setting and after going through everything which is discussed below, it doesn&amp;rsquo;t sounds that complicated.</description><content:encoded><![CDATA[<p>In this note I am trying to understand what does <code>Variational</code> means in models like <code>Variational Autoencoders</code> , <code>Variational Inference</code> etc.</p>
 <p>This is an interesting setting and after going through everything which is discussed below, it doesn&rsquo;t sounds that complicated. Often the papers, makes things too convoluted, but there are only a few things to keep in mind. There are a few steps, which are taken to make the model probabilistic, which will be made clear as you go through the explanations one by one and do look at the code and things won&rsquo;t seem that scary anymore.</p>
 <p>Also, I was curious about how probabilistic modeling works for Neural networks, they talked some of that in MLPR, but they made it sound all too complicated. However, looking at the code it doesn&rsquo;t seem that complicated. All we do is draw weights and biases in various layers in the neural networks from a gausssian or some other distribution. Now, instead of giving a point wise prediction, we get a number of predictions for every point, which can be used to know uncertainty in predictions. Generally, non-bayesian neural network gives the mean-prediction, but now we have a distribution over prediction, where the variance term tells about the certainty or confidence of prediction. Frameworks like !(Pyro)[https://num.pyro.ai/en/stable/getting_started.html] makes it easier to implement various probabilistic models, including Bayesian Neural Netwoks. We will see an example towards the end of the note.</p>
@@ -927,7 +927,7 @@ This is an interesting setting and after going through everything which is discu
 
 <a target=“_blank” href="https://num.pyro.ai/en/stable/examples/bnn.html" rel="noopener">https://num.pyro.ai/en/stable/examples/bnn.html</a></li>
 </ul>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/UoE/MLSP/QS/Week10/PCA-Notes/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/UoE/MLSP/QS/Week10/PCA-Notes/</guid><description>PCA Algo The algorithm for PCA can be broken down into the following steps:
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/MLSP/QS/Week10/PCA-Notes/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/MLSP/QS/Week10/PCA-Notes/</guid><description>PCA Algo The algorithm for PCA can be broken down into the following steps:
 Standardize the data: Subtract the mean from each feature and divide by the standard deviation to ensure that all features are on the same scale.</description><content:encoded><![CDATA[<h2 id="pca-algo">PCA Algo</h2>
 <p>
 
@@ -1063,7 +1063,7 @@ Note that step 2 involves the transpose of the matrix of eigenvectors, $U^T$, wh
 <p>This ambiguity can be resolved by using additional information or criteria to order the independent components. For example, if the independent components represent audio signals, they can be ordered based on their frequency content or their energy levels. Alternatively, if the independent components represent images, they can be ordered based on their spatial frequency content or their edge information.</p>
 <p>Another approach is to use clustering algorithms to group independent components that are similar or belong to the same source. This can help to identify the underlying sources of the independent components and to assign them to specific sources in a meaningful way.</p>
 <p>Overall, the ambiguity of order of independent components is a common challenge in ICA, but it can be mitigated by using additional information and criteria to order and group the independent components.</p>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/UoE/MLSP/QS/Week6/QS_W6/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/UoE/MLSP/QS/Week6/QS_W6/</guid><description>1. b: By differentiating, show that a necessary condition to minimize P (error) is that θ satisfies p(θ|c1)P (c1) = p(θ|c2)P (c2)
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/MLSP/QS/Week6/QS_W6/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/MLSP/QS/Week6/QS_W6/</guid><description>1. b: By differentiating, show that a necessary condition to minimize P (error) is that θ satisfies p(θ|c1)P (c1) = p(θ|c2)P (c2)
 Leibniz&amp;rsquo;s rule for differentiating an integral is a method that allows us to differentiate an integral that depends on a parameter.</description><content:encoded><![CDATA[<p><strong>1. b: By differentiating, show that a necessary condition to minimize P (error) is that θ satisfies  p(θ|c1)P (c1) = p(θ|c2)P (c2)</strong></p>
 <p>Leibniz&rsquo;s rule for differentiating an integral is a method that allows us to differentiate an integral that depends on a parameter. It is named after the German mathematician Gottfried Wilhelm Leibniz.</p>
 <p>The rule states that if we have an integral of the form:</p>
@@ -1123,7 +1123,7 @@ bilities P (c1) and P (c2), the means μ1 and μ2 and the common covariance Σ.<
 <p>where $||\cdot||$ denotes the Euclidean norm. Therefore, the distance between the means of the projected distributions is always less than or equal to the distance between the means of the original distributions.</p>
 <p>Since the classification error is proportional to the distance between the means of the distributions, it follows that the true error cannot decrease if we first project the distributions to a lower-dimensional space and then classify them. In other words , the classification error in the lower-dimensional space can never be lower than the classification error in the original space. This is true for any choice of the projection vector $\mathbf{w}$ and any choice of the lower-dimensional subspace.</p>
 <p>Therefore, if we want to minimize the classification error, we should always use the original high-dimensional feature space for classification, unless we have a good reason to believe that the relevant information in the data lies in a lower-dimensional subspace. In practice, we can use dimensionality reduction techniques, such as principal component analysis (PCA) or linear discriminant analysis (LDA), to identify the most important dimensions or subspace that capture the relevant information in the data. However, we should always keep in mind that projecting the data to a lower-dimensional space can never improve the classification accuracy beyond what is achievable in the original high-dimensional space.</p>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/UoE/MLSP/QS/Week7/Bayesian-Learning/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/UoE/MLSP/QS/Week7/Bayesian-Learning/</guid><description>Expectations as Integrals In probability theory and statistics, expectations are often expressed as integrals. The expectation of a function $g(x)$ with respect to a probability distribution $p(x)$ is defined as:</description><content:encoded><![CDATA[<h2 id="expectations-as-integrals">Expectations as Integrals</h2>
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/MLSP/QS/Week7/Bayesian-Learning/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/MLSP/QS/Week7/Bayesian-Learning/</guid><description>Expectations as Integrals In probability theory and statistics, expectations are often expressed as integrals. The expectation of a function $g(x)$ with respect to a probability distribution $p(x)$ is defined as:</description><content:encoded><![CDATA[<h2 id="expectations-as-integrals">Expectations as Integrals</h2>
 <p>In probability theory and statistics, expectations are often expressed as integrals. The expectation of a function $g(x)$ with respect to a probability distribution $p(x)$ is defined as:</p>
 <p>$\mathbb{E}[g(x)] = \int g(x)p(x)dx$</p>
 <p>This integral represents the average value of $g(x)$ over the probability distribution $p(x)$. The integral is taken over the entire domain of $x$ and the function $g(x)$ is weighted by the probability density function $p(x)$.</p>
@@ -1157,7 +1157,7 @@ $$</p>
 <p>where $f(\mathbf{x};\theta)$ is the regression function that maps inputs to outputs using the parameters $\theta$.</p>
 <p>The MAP estimate can be viewed as a point estimate of the parameters, since it provides a single value for the parameters rather than a distribution over possible values. It can be more computationally efficient than computing the full posterior distribution, especially for large-scale problems.</p>
 <p>However, the MAP estimate may not fully capture the uncertainty in the model parameters and can be sensitive to the choice of prior distribution. In addition, it can be affected by overfitting if the prior distribution is not well-suited to the data. Therefore, it is important to consider the limitations and assumptions of the MAP estimate and to compare it with other methods of Bayesian learning, such as computing the full posterior distribution or using Bayesian model averaging.</p>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/UoE/MLSP/QS/Week7/QS_W7/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/UoE/MLSP/QS/Week7/QS_W7/</guid><description>1.b Show that the MAP estimate can change under an invertible nonlinear transform of the parameter space while the ML estimate does not.
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/MLSP/QS/Week7/QS_W7/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/MLSP/QS/Week7/QS_W7/</guid><description>1.b Show that the MAP estimate can change under an invertible nonlinear transform of the parameter space while the ML estimate does not.
 MAP vs. ML Estimates under Nonlinear Transformations The maximum likelihood (ML) estimate of the model parameters $\theta$ is the value that maximizes the likelihood function $p(D\mid\theta)$, where $D$ represents the observed data.</description><content:encoded><![CDATA[<p>1.b <strong>Show that the MAP estimate can change under an invertible nonlinear transform of the parameter space while the ML estimate does not.</strong></p>
 <h5 id="map-vs-ml-estimates-under-nonlinear-transformations">MAP vs. ML Estimates under Nonlinear Transformations</h5>
 <p>The maximum likelihood (ML) estimate of the model parameters $\theta$ is the value that maximizes the likelihood function $p(D\mid\theta)$, where $D$ represents the observed data. Mathematically, we can write:</p>
@@ -1231,7 +1231,7 @@ $$</p>
 <p><em>In this particular case, the likelihood function is not differentiable everywhere, so we cannot take its derivative to find the maximum likelihood estimate of $\theta$.</em></p>
 <p>However, we can observe that the likelihood function is a decreasing function of $\theta$ for $\theta &lt; x_{(n)}$ and an increasing function of $\theta$ for $\theta &gt; x_{(1)}$. This means that the maximum likelihood estimate of $\theta$ must lie in the interval $[x_{(1)}, x_{(n)}]$. We can then compare the likelihood of the two endpoints of this interval to find the maximum likelihood estimate. Since the likelihood is 0 outside of this interval, we can be sure that the maximum likelihood estimate lies within it.</p>
 <p>In this case, the endpoint $x_{(n)}$ has the highest likelihood among all the possible values of $\theta$ within the interval, so the maximum likelihood estimate is $\hat{\theta}<em>{ML} = x</em>{(n)} = 0.8$.</p>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/UoE/MLSP/QS/Week9/QS_W9/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/UoE/MLSP/QS/Week9/QS_W9/</guid><description>Q2.
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/MLSP/QS/Week9/QS_W9/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/MLSP/QS/Week9/QS_W9/</guid><description>Q2.
 We can use the law of total probability to express the joint probability of the observation and the current state in terms of the previous state as:
 $P(V_t, \omega(t) = j | \omega_0) = \sum_i P(V_t, \omega(t) = j, \omega(t-1) = i | \omega_0)$</description><content:encoded><![CDATA[<p>Q2.</p>
 <p>We can use the law of total probability to express the joint probability of the observation and the current state in terms of the previous state as:</p>
@@ -1250,7 +1250,7 @@ $P(V_t, \omega(t) = j | \omega_0) = \sum_i P(V_t, \omega(t) = j, \omega(t-1) = i
 &amp;\quad = \sum_i b_j(v_t) a_{i,j} \alpha_i(t-1)
 \end{align} $$</p>
 <p>So we have recursively defined $\alpha_j(t)$ as a function of the previous time step $\alpha_i(t-1)$, the transition probability $a_{i,j}$, and the emission probability $b_j(v_t)$.</p>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/UoE/MLSP/Track-Weeks/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/UoE/MLSP/Track-Weeks/</guid><description> Week 1 Classification Part 1 Introduction to the biological neuron that served as inspiration for the Perceptron Linear classification and simple linear discriminant functions, and the concept of hyperplanes Multicategory classification, linear machines and generalized linear discriminants Normalisation, solution regions, the margin Week 2 Classification Part 2 Convex function, set and hull The Perceptron Criterion and Algorithm The MSE Classification Procedure Support Vector Machines Week 3 Neural Network Multilayer Neural Networks: forward operation and expressive power Multilayer Neural Networks: Back-propagation setup Multilayer Neural Networks: Back-propagation algorithm Multilayer Neural Networks: Training protocols Week 4 CNN Convolutional Neural Networks and Deep Learning Optimization Reviewing Background for Optimisation Bracketing Methods for 1-d Optimisation Gradient Descent Newton’s Method Week 5 Optimization Levenberg Marquardt Gradient descent with line minima Conjugate Gradient Descent Week 6 Bayes Decision Theory Supervised vs unsupervised learning; probabilistic view to learning Bayes formula, Bayes decision rule and probability of error Examples of statistical classification from a Bayesian view Week 7 Model Learning Maximum likelihood estimation; non-linear regression; Maximum likelihood fitting of Gaussians Overfitting; bias-variance dilemma Learning models with Bayesian; fitting 1D Gaussians; the Bayes – Maximum likelihood link Week 8 Clustering K-means clustering; k-means for vector quantization; optimality of k-means Relation to matrix factorisation; k-medoids algorithm Mixture of Gaussians and EM algorithm Week 9 HMM First-order Markov models; first-order hidden Markov models; different models Three fundamental problems; evaluation problem; isolated word speech recognition Evaluation problem; decoding problem; learning problem Week 10 Principal Component Analysis (PCA) Principal component analysis; importance and implications; subspace projections Relation to matrix factorisation; PCA example Independent Component Analysis (ICA) Independent component analysis; differences with PCA</description><content:encoded><![CDATA[<ul>
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/MLSP/Track-Weeks/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/MLSP/Track-Weeks/</guid><description> Week 1 Classification Part 1 Introduction to the biological neuron that served as inspiration for the Perceptron Linear classification and simple linear discriminant functions, and the concept of hyperplanes Multicategory classification, linear machines and generalized linear discriminants Normalisation, solution regions, the margin Week 2 Classification Part 2 Convex function, set and hull The Perceptron Criterion and Algorithm The MSE Classification Procedure Support Vector Machines Week 3 Neural Network Multilayer Neural Networks: forward operation and expressive power Multilayer Neural Networks: Back-propagation setup Multilayer Neural Networks: Back-propagation algorithm Multilayer Neural Networks: Training protocols Week 4 CNN Convolutional Neural Networks and Deep Learning Optimization Reviewing Background for Optimisation Bracketing Methods for 1-d Optimisation Gradient Descent Newton’s Method Week 5 Optimization Levenberg Marquardt Gradient descent with line minima Conjugate Gradient Descent Week 6 Bayes Decision Theory Supervised vs unsupervised learning; probabilistic view to learning Bayes formula, Bayes decision rule and probability of error Examples of statistical classification from a Bayesian view Week 7 Model Learning Maximum likelihood estimation; non-linear regression; Maximum likelihood fitting of Gaussians Overfitting; bias-variance dilemma Learning models with Bayesian; fitting 1D Gaussians; the Bayes – Maximum likelihood link Week 8 Clustering K-means clustering; k-means for vector quantization; optimality of k-means Relation to matrix factorisation; k-medoids algorithm Mixture of Gaussians and EM algorithm Week 9 HMM First-order Markov models; first-order hidden Markov models; different models Three fundamental problems; evaluation problem; isolated word speech recognition Evaluation problem; decoding problem; learning problem Week 10 Principal Component Analysis (PCA) Principal component analysis; importance and implications; subspace projections Relation to matrix factorisation; PCA example Independent Component Analysis (ICA) Independent component analysis; differences with PCA</description><content:encoded><![CDATA[<ul>
 <li><input checked="" disabled="" type="checkbox"> Week 1
 <ul>
 <li><input checked="" disabled="" type="checkbox"> Classification Part 1
@@ -1375,7 +1375,7 @@ $P(V_t, \omega(t) = j | \omega_0) = \sum_i P(V_t, \omega(t) = j, \omega(t-1) = i
 </ul>
 </li>
 </ul>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/UoE/MLSP/Week1/Notes/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/UoE/MLSP/Week1/Notes/</guid><description>Linear Discriminant Functions Linear discriminant functions, also known as linear classifiers, are mathematical functions used in classification tasks to separate data points from different classes based on their feature values. These functions model a linear decision boundary or hyperplane that separates the classes in the feature space.</description><content:encoded><![CDATA[<h1 id="linear-discriminant-functions">Linear Discriminant Functions</h1>
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/MLSP/Week1/Notes/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/MLSP/Week1/Notes/</guid><description>Linear Discriminant Functions Linear discriminant functions, also known as linear classifiers, are mathematical functions used in classification tasks to separate data points from different classes based on their feature values. These functions model a linear decision boundary or hyperplane that separates the classes in the feature space.</description><content:encoded><![CDATA[<h1 id="linear-discriminant-functions">Linear Discriminant Functions</h1>
 <p><strong>Linear discriminant functions</strong>, also known as <strong>linear classifiers</strong>, are mathematical functions used in classification tasks to separate data points from different classes based on their feature values. These functions <strong>model a linear decision boundary or hyperplane that separates the classes in the feature space</strong>.</p>
 <p>Here&rsquo;s an overview of linear discriminant functions:</p>
 <ol>
@@ -1388,16 +1388,16 @@ $P(V_t, \omega(t) = j | \omega_0) = \sum_i P(V_t, \omega(t) = j, \omega(t-1) = i
 </ol>
 <p><strong>Linear discriminant functions assume that the decision boundaries between classes are linear.</strong> While they may not capture complex relationships present in the data, linear classifiers can be effective when classes are separable by linear decision boundaries or in situations where interpretability and simplicity are important.</p>
 <p>Overall, linear discriminant functions play a crucial role in classification tasks by separating data points based on linear decision boundaries or hyperplanes, enabling the prediction of class labels for unseen data.</p>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/UoE/NLU/NLU/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/UoE/NLU/NLU/</guid><description> Week 1 (Machine Translation) Introduction Machine Translation Conditional Language Models (with n-grams) Week 2 (Language Models) Feedforward Language Models RNN LSTM GRU Week 3 Seq2Seq Models with attention Transformers Week 4 Word Embeddings Pretrained Language Models Week 5 Prompting Evaluation of MT Week 6 Open Vocabulary Models Low Resource MT NLP Ethics Week 7 Bias in Embeddings and Language Models Summarization 1 Summarization 2 Week 8 Summarization 3 Week 9 Neural Parsing Unsupervised Parsing Week 10 Movie Summarization Tutorials Tutorial 1 - Language Models Tutorial 2 - Neural Network Language Models Tutorial 3 - Transformers Tutorial 4 - Ethics in NLP Tutorial 5 - Summarization</description><content:encoded><![CDATA[<h2 id="week-1-machine-translationweek1">
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/NLU/NLU/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/NLU/NLU/</guid><description> Week 1 (Machine Translation) Introduction Machine Translation Conditional Language Models (with n-grams) Week 2 (Language Models) Feedforward Language Models RNN LSTM GRU Week 3 Seq2Seq Models with attention Transformers Week 4 Word Embeddings Pretrained Language Models Week 5 Prompting Evaluation of MT Week 6 Open Vocabulary Models Low Resource MT NLP Ethics Week 7 Bias in Embeddings and Language Models Summarization 1 Summarization 2 Week 8 Summarization 3 Week 9 Neural Parsing Unsupervised Parsing Week 10 Movie Summarization Tutorials Tutorial 1 - Language Models Tutorial 2 - Neural Network Language Models Tutorial 3 - Transformers Tutorial 4 - Ethics in NLP Tutorial 5 - Summarization</description><content:encoded><![CDATA[<h2 id="week-1-machine-translationweek1">
 
 
 
 
 
 <a
-  href="/second-brain/UoE/NLU/Week1/"
+  href="/UoE/NLU/Week1/"
   rel="noopener" class="internal-link"
-  data-src="/second-brain/UoE/NLU/Week1/">Week 1 (Machine Translation)</a></h2>
+  data-src="/UoE/NLU/Week1/">Week 1 (Machine Translation)</a></h2>
 <ul>
 <li><input checked="" disabled="" type="checkbox"> Introduction</li>
 <li><input checked="" disabled="" type="checkbox"> Machine Translation</li>
@@ -1410,9 +1410,9 @@ $P(V_t, \omega(t) = j | \omega_0) = \sum_i P(V_t, \omega(t) = j, \omega(t-1) = i
 
 
 <a
-  href="/second-brain/UoE/NLU/Week2/"
+  href="/UoE/NLU/Week2/"
   rel="noopener" class="internal-link"
-  data-src="/second-brain/UoE/NLU/Week2/">Week 2 (Language Models)</a></h2>
+  data-src="/UoE/NLU/Week2/">Week 2 (Language Models)</a></h2>
 <ul>
 <li><input checked="" disabled="" type="checkbox"> Feedforward Language Models</li>
 <li><input checked="" disabled="" type="checkbox"> RNN</li>
@@ -1426,9 +1426,9 @@ $P(V_t, \omega(t) = j | \omega_0) = \sum_i P(V_t, \omega(t) = j, \omega(t-1) = i
 
 
 <a
-  href="/second-brain/UoE/NLU/Week3/"
+  href="/UoE/NLU/Week3/"
   rel="noopener" class="internal-link"
-  data-src="/second-brain/UoE/NLU/Week3/">Week 3</a></h2>
+  data-src="/UoE/NLU/Week3/">Week 3</a></h2>
 <ul>
 <li><input checked="" disabled="" type="checkbox"> Seq2Seq Models with attention</li>
 <li><input disabled="" type="checkbox"> Transformers</li>
@@ -1440,9 +1440,9 @@ $P(V_t, \omega(t) = j | \omega_0) = \sum_i P(V_t, \omega(t) = j, \omega(t-1) = i
 
 
 <a
-  href="/second-brain/UoE/NLU/Week4/"
+  href="/UoE/NLU/Week4/"
   rel="noopener" class="internal-link"
-  data-src="/second-brain/UoE/NLU/Week4/">Week 4</a></h2>
+  data-src="/UoE/NLU/Week4/">Week 4</a></h2>
 <ul>
 <li><input checked="" disabled="" type="checkbox"> Word Embeddings</li>
 <li><input checked="" disabled="" type="checkbox"> Pretrained Language Models</li>
@@ -1454,9 +1454,9 @@ $P(V_t, \omega(t) = j | \omega_0) = \sum_i P(V_t, \omega(t) = j, \omega(t-1) = i
 
 
 <a
-  href="/second-brain/UoE/NLU/Week5/"
+  href="/UoE/NLU/Week5/"
   rel="noopener" class="internal-link"
-  data-src="/second-brain/UoE/NLU/Week5/">Week 5</a></h2>
+  data-src="/UoE/NLU/Week5/">Week 5</a></h2>
 <ul>
 <li><input checked="" disabled="" type="checkbox"> Prompting</li>
 <li><input checked="" disabled="" type="checkbox"> Evaluation of MT</li>
@@ -1468,9 +1468,9 @@ $P(V_t, \omega(t) = j | \omega_0) = \sum_i P(V_t, \omega(t) = j, \omega(t-1) = i
 
 
 <a
-  href="/second-brain/UoE/NLU/Week6/"
+  href="/UoE/NLU/Week6/"
   rel="noopener" class="internal-link"
-  data-src="/second-brain/UoE/NLU/Week6/">Week 6</a></h2>
+  data-src="/UoE/NLU/Week6/">Week 6</a></h2>
 <ul>
 <li><input checked="" disabled="" type="checkbox"> Open Vocabulary Models</li>
 <li><input checked="" disabled="" type="checkbox"> Low Resource MT</li>
@@ -1483,9 +1483,9 @@ $P(V_t, \omega(t) = j | \omega_0) = \sum_i P(V_t, \omega(t) = j, \omega(t-1) = i
 
 
 <a
-  href="/second-brain/UoE/NLU/Week7/"
+  href="/UoE/NLU/Week7/"
   rel="noopener" class="internal-link"
-  data-src="/second-brain/UoE/NLU/Week7/">Week 7</a></h2>
+  data-src="/UoE/NLU/Week7/">Week 7</a></h2>
 <ul>
 <li><input disabled="" type="checkbox"> Bias in Embeddings and Language Models</li>
 <li><input checked="" disabled="" type="checkbox"> Summarization 1</li>
@@ -1498,9 +1498,9 @@ $P(V_t, \omega(t) = j | \omega_0) = \sum_i P(V_t, \omega(t) = j, \omega(t-1) = i
 
 
 <a
-  href="/second-brain/UoE/NLU/Week7/"
+  href="/UoE/NLU/Week7/"
   rel="noopener" class="internal-link"
-  data-src="/second-brain/UoE/NLU/Week7/">Week 8</a></h2>
+  data-src="/UoE/NLU/Week7/">Week 8</a></h2>
 <ul>
 <li><input checked="" disabled="" type="checkbox"> Summarization 3</li>
 </ul>
@@ -1521,7 +1521,7 @@ $P(V_t, \omega(t) = j | \omega_0) = \sum_i P(V_t, \omega(t) = j, \omega(t-1) = i
 <li><input disabled="" type="checkbox"> Tutorial 4 - Ethics in NLP</li>
 <li><input disabled="" type="checkbox"> Tutorial 5 - Summarization</li>
 </ul>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/UoE/NLU/Week1/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/UoE/NLU/Week1/</guid><description>Introduction Readings:
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/NLU/Week1/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/NLU/Week1/</guid><description>Introduction Readings:
 The Future of Computational Linguistics: Beyond the Alchemy Church and Lieberman (21)
 Why has deep learning taken over NLP?
 Universal Function Approximators Representation Learning Multi-task learning Works with wide class of data: strings, labels, trees, graphs, tables, images deep learning solves the difficulties of applying machine learning to NLP&amp;hellip; But it does not solve NLP!</description><content:encoded><![CDATA[<h1 id="introduction">Introduction</h1>
@@ -1672,7 +1672,7 @@ where: $P(y)$ is <strong>language model</strong> and $P(x|y)$ is the <strong>tra
 <p>Understanding the tradeoffs of working with Markov assumptions will help you appreciate the fact that neural models usually make them go away!</p>
 </li>
 </ol>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/UoE/NLU/Week10/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/UoE/NLU/Week10/</guid><description>Movie Summarization Readings Movie Summarization via Sparse Graph Construction. Papalampidi, Keller, Lapata, 2021.
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/NLU/Week10/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/NLU/Week10/</guid><description>Movie Summarization Readings Movie Summarization via Sparse Graph Construction. Papalampidi, Keller, Lapata, 2021.
 Motivation
 Summarize full-length movies by creating shorter videos containing their most informative scenes. Key Concept
 Turning Points Key events in a movie that describe its storyline Problem Formulation</description><content:encoded><![CDATA[<h1 id="movie-summarization">Movie Summarization</h1>
@@ -1735,7 +1735,7 @@ Turning Points Key events in a movie that describe its storyline Problem Formula
 <p><strong>What does the graphs mean?</strong></p>
 </li>
 </ul>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/UoE/NLU/Week2/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/UoE/NLU/Week2/</guid><description>Feedforward Language Model Reading:
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/NLU/Week2/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/NLU/Week2/</guid><description>Feedforward Language Model Reading:
 A Course in Machine Learning, chapter 4, Daumé. Chapter 7 of Speech and Language Processing, 3rd edition, Jurafsky &amp;amp; Martin. Representing n-gram probabilities with neural networks For neural networks: $\mathbf{x}$ : input vector $\mathbf{h}$ : hidden layer $\mathbf{y}$ : output vector Vector Rrepresentations:</description><content:encoded><![CDATA[<h1 id="feedforward-language-model">Feedforward Language Model</h1>
 <p>Reading:</p>
 <ul>
@@ -1950,7 +1950,7 @@ $h_t = o_t * \tanh(C_t)$</p>
 In GRUs, the candidate hidden state is computed as the element-wise product of the reset gate $r_t$ and the previous hidden state $h_{t-1}$, which is then concatenated with the input $x_t$ and transformed by a weight matrix W_h and an activation function tanh. In contrast, in LSTMs, the candidate memory cell $\tilde{C}<em>t$ is computed separately from the input $x_t$ and the previous hidden state $h</em>{t-1}$, using a weight matrix $W_C$ and an activation function $tanh$.
 Furthermore, the memory cell $C_t$ in LSTMs is updated using both the forget gate $f_t$ (which controls how much of the previous memory cell state to retain) and the input gate $i_t$ (which controls how much of the new candidate memory cell value to use). The hidden state $h_t$ is then computed using the output gate $o_t$ (which controls how much of the memory cell state to output) and the updated memory cell $C_t$. In GRUs, the hidden state is computed directly using the candidate hidden state and the update gate $z_t$.</p>
 <p>The differences in architecture between GRUs and LSTMs have implications for their performance in different tasks. For example, GRUs may be more suitable for tasks that require faster training and less complex models, while LSTMs may be more suitable for tasks that require modeling more complex dependencies and handling longer sequences of data.</p>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/UoE/NLU/Week4/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/UoE/NLU/Week4/</guid><description>Word Embeddings Readings:
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/NLU/Week4/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/NLU/Week4/</guid><description>Word Embeddings Readings:
 Efficient estimation of word representations in vector space. Mikolov et al., NIPS Workshop 2013.
 Contextual word representations: A contextual introduction. Smith, 2019. This paper provides a conceptual overview of word embeddings, and explains why contextualized embeddings are an important innovation</description><content:encoded><![CDATA[<h1 id="word-embeddings">Word Embeddings</h1>
 <p>Readings:</p>
@@ -2333,7 +2333,7 @@ $$</p>
 </ul>
 </li>
 </ul>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/UoE/NLU/Week5/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/UoE/NLU/Week5/</guid><description>Language models are unsupervised multitask learners: Moving from single task to multi-task | this time by using textual prompts.
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/NLU/Week5/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/NLU/Week5/</guid><description>Language models are unsupervised multitask learners: Moving from single task to multi-task | this time by using textual prompts.
 Learning to perform a single task can be expressed in a probabilistic framework as estimating a conditional distribution $p(output|input)$.</description><content:encoded><![CDATA[<h3 id="language-models-are-unsupervised-multitask-learners">Language models are unsupervised multitask learners:</h3>
 <p><strong>Moving from single task to multi-task | this time by using textual prompts.</strong></p>
 <ul>
@@ -2807,7 +2807,7 @@ $$\kappa = \frac{\rho{(A)} - \rho{(E)}}{ 1 - \rho{(E)}}$$</p>
 </ul>
 </li>
 </ul>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/UoE/NLU/Week6/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/UoE/NLU/Week6/</guid><description>Open Vocabulary Models Readings
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/NLU/Week6/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/NLU/Week6/</guid><description>Open Vocabulary Models Readings
 Neural Machine Translation of Rare Words with Subword Units, Sennrich et al. (2016)
 BPE-Dropout: Simple and Effective Subword Regularization, Provilkov et al. (2020)
 We are encoding rare and unknown words as sequences of subword units.</description><content:encoded><![CDATA[<h1 id="open-vocabulary-models">Open Vocabulary Models</h1>
@@ -3347,7 +3347,7 @@ We are encoding rare and unknown words as sequences of subword units.</descripti
 </ul>
 </li>
 </ul>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/UoE/NLU/Week7/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/UoE/NLU/Week7/</guid><description>Bias in Embeddings and Language Models Summarization Reading
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/NLU/Week7/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/NLU/Week7/</guid><description>Bias in Embeddings and Language Models Summarization Reading
 Get To The Point: Summarization with Pointer-Generator Networks
 Text Summarization with Pretrained Encoders
 Planning with Learned Entity Prompts for Abstractive Summarization
@@ -3746,7 +3746,7 @@ $$</p>
           * $F(s)$ correlates well with human ratings $(\rho = 0.774)$.
           * We can see that for SumScreen the difference is most discerable even though it is low.  Yes -&gt; blueprint methods are more faithful
 </code></pre>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/UoE/NLU/Week9/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/UoE/NLU/Week9/</guid><description>Neural Parsing Readings
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/NLU/Week9/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/NLU/Week9/</guid><description>Neural Parsing Readings
 Grammar as a Foreign Language, Vinyals et al., NeurIPS 2015. This is the encoder-decoder-based pasing model introduced in the lecture.
 Constituency parsing with a self-attentive encoder. Kitaev and Klein, ACL 2018.</description><content:encoded><![CDATA[<h1 id="neural-parsing">Neural Parsing</h1>
 <p>Readings</p>
@@ -3968,4 +3968,4 @@ applying the constituency tests and averaging their grammaticality judgments
 </ul>
 </li>
 </ul>
-]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/second-brain/UoE/Speech-Synthesis/9.-Sequence-to-Sequence/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/second-brain/UoE/Speech-Synthesis/9.-Sequence-to-Sequence/</guid><description/><content:encoded></content:encoded></item></channel></rss>
+]]></content:encoded></item><item><title/><link>https://lordzuko.github.io/UoE/Speech-Synthesis/9.-Sequence-to-Sequence/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lordzuko.github.io/UoE/Speech-Synthesis/9.-Sequence-to-Sequence/</guid><description/><content:encoded></content:encoded></item></channel></rss>
